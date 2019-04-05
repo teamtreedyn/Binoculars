@@ -60,7 +60,7 @@ namespace HelloDynamo {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/HelloDynamo;component/statswindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Tracker;component/statswindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\StatsWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

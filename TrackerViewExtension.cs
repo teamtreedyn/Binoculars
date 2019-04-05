@@ -1,30 +1,32 @@
 ﻿using Dynamo.ViewModels;
 using Dynamo.Wpf.Extensions;
-using HelloDynamo.Stats;
 using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HelloDynamo
+namespace Tracker
 {
     /// <summary>
     /// Dynamo View Extension that can control both the Dynamo application and its UI (menus, view, canvas, nodes).
     /// </summary>
     public class TrackerViewExtension : IViewExtension
     {
-        public string UniqueId => "5E85F38F-0A19-4F24-9E18-96845764780C";
-        public string Name => "Hello Dynamo View Extension";
+        public string UniqueId => "4DB6C8D9-7D8E-42A8-8995-E14ACFA037CF";
+        public string Name => "Tracker View Extension";
 
         private MenuItem _extensionMenu;
         private ViewLoadedParams _viewLoadedParams;
         private DynamoViewModel _dynamoViewModel => _viewLoadedParams.DynamoWindow.DataContext as DynamoViewModel;
 
+
         /// <summary>
         /// Method that is called when Dynamo starts, but is not yet ready to be used.
         /// </summary>
         /// <param name="vsp">Parameters that provide references to Dynamo settings, version and extension manager.</param>
-        public void Startup(ViewStartupParams vsp) { }
+        public void Startup(ViewStartupParams vsp)
+        {
+        }
 
         /// <summary>
         /// Method that is called when Dynamo has finished loading and the UI is ready to be interacted with.
@@ -50,43 +52,22 @@ namespace HelloDynamo
         public void MakeMenuItems()
         {
             // let's now create a completely top-level new menu item
-            _extensionMenu = new MenuItem { Header = "Dynamo Hackathon" };
+            _extensionMenu = new MenuItem {Header = "Tracker"};
 
             // and now we add a new sub-menu item that says hello when clicked
-            var sayHelloMenuItem = new MenuItem { Header = "Say Hello" };
+            var sayHelloMenuItem = new MenuItem {Header = "Freak User"};
             sayHelloMenuItem.Click += (sender, args) =>
             {
-                MessageBox.Show("Hello " + Environment.UserName);
+                MessageBox.Show("Hello " + Environment.UserName + " you are being watched!");
             };
 
-            // and a submenu item that shows the window
-            var statsMenuItem = new MenuItem { Header = "Show Statistics" };
-            statsMenuItem.Click += (sender, args) =>
-            {
-                var viewModel = new StatsViewModel(_viewLoadedParams);
-                var window = new StatsWindow
-                {
-                    // Set the data context for the main grid in the window.
-                    MainGrid = { DataContext = viewModel },
-
-                    // Set the owner of the window to the Dynamo window.
-                    Owner = _viewLoadedParams.DynamoWindow
-                };
-                window.Left = window.Owner.Left + 400;
-                window.Top = window.Owner.Top + 200;
-                window.Show();
-            };
 
             // now make a hackathon worthy menu item
-            var hackMenuItem = new MenuItem { Header = "Hack !" };
-            hackMenuItem.Click += (sender, args) =>
-            {
-                Process.Start("https://giphy.com/search/hackathon");
-            };
+            var hackMenuItem = new MenuItem {Header = "Tracker Information"};
+            hackMenuItem.Click += (sender, args) => { Process.Start("https://www.google.com/search?biw=1707&bih=801&tbm=isch&sa=1&ei=kXenXJXRMI6HrwShk4vgCw&q=impressive+statistical+stuff&oq=impressive+statistical+stuff&gs_l=img.3...1791.5141..5399...0.0..0.140.648.8j1......1....1..gws-wiz-img.......0i24.aoH3n_7DImU"); };
 
             // add all menu items to menu
             _extensionMenu.Items.Add(sayHelloMenuItem);
-            _extensionMenu.Items.Add(statsMenuItem);
             _extensionMenu.Items.Add(hackMenuItem);
 
             // finally, we need to add our menu to Dynamo
@@ -96,8 +77,12 @@ namespace HelloDynamo
         /// <summary>
         /// Method that is called when the host Dynamo application is closed.
         /// </summary>
-        public void Shutdown() { }
+        public void Shutdown()
+        {
+        }
 
-        public void Dispose() { }
+        public void Dispose()
+        {
+        }
     }
 }
