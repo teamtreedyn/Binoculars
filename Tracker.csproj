@@ -78,43 +78,34 @@
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.0.2.6986\lib\net45\DynamoApplications.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoCore, Version=2.0.2.6986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.0.2.6986\lib\net45\DynamoCore.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoCore">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\DynamoCore.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoCoreWpf, Version=2.0.2.6986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.0.2.6986\lib\net45\DynamoCoreWpf.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoCoreWpf">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\DynamoCoreWpf.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoInstallDetective, Version=2.0.2.6986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.0.2.6986\lib\net45\DynamoInstallDetective.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoInstallDetective">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\DynamoInstallDetective.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoServices, Version=2.0.2.6986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.0.2.6986\lib\net45\DynamoServices.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoServices">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\DynamoServices.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoShapeManager, Version=2.0.2.6986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.0.2.6986\lib\net45\DynamoShapeManager.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoShapeManager">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\DynamoShapeManager.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoUnits, Version=2.0.2.6986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.0.2.6986\lib\net45\DynamoUnits.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoUnits">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\DynamoUnits.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoUtilities, Version=2.0.2.6986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.0.2.6986\lib\net45\DynamoUtilities.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoUtilities">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\DynamoUtilities.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ProtoCore, Version=2.0.2.6986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.0.2.6986\lib\net45\ProtoCore.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ProtoCore">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\ProtoCore.dll</HintPath>
     </Reference>
-    <Reference Include="ProtoGeometry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.0.2.6986\lib\net45\ProtoGeometry.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ProtoGeometry">
+      <HintPath>..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\ProtoGeometry.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xaml" />
