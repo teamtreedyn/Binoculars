@@ -32,7 +32,7 @@ namespace HelloDynamo
         /// </param>
         public void Ready(ReadyParams rp)
         {
-            MessageBox.Show("Extension is ready!");
+            MessageBox.Show("Tracker is now ready!");
 
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
