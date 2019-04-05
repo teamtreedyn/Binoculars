@@ -51,11 +51,13 @@ namespace Tracker
         private static void OnCurrentWorkspaceChanged(Dynamo.Graph.Workspaces.IWorkspaceModel obj)
         {
             FileName = DynamoReadyParams.CurrentWorkspaceModel.FileName;
-
+            
             MessageBox.Show($"Congratulations on opening the {obj.Name} workspace!");
 
             // WE HOOK UP HERE 
             MessageBox.Show($"The current Graph name is {FileName}");
+            var dataToExport = ExportData.Export(DynamoReadyParams.CurrentWorkspaceModel);
+            ExportSheets.Execute(dataToExport);
         }
     }
 }
