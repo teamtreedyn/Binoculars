@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,24 +17,26 @@ namespace Tracker
 {
     public static class ExportData
     {
-        private static string date;
         private static string user;
         private static string computerName;
-        private static string fileName;
-        
-        internal static IList<IList<object>> Export(IWorkspaceModel currentWorkspaceModel)
+        private static string geo_x;
+        private static string geo_y;
+        private static string dynamoVersion;
+        private static string revitVersion;
+        private static string ip;
+        private static string filename;
+        private static string date;
+
+        internal static IList<IList<object>> Export(string filename, string dynamoversion)
         {
             IList<IList<object>> export = new List<IList<object>>();
 
-            date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             user = Environment.MachineName;
             computerName = Environment.UserName;
-            fileName = currentWorkspaceModel.FileName;
+            date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            string ip = new WebClient().DownloadString("http://icanhazip.com");
 
-            export.Add(new List<object> { date } );
-            export.Add(new List<object> { user } );
-            export.Add(new List<object> { computerName } );
-            export.Add(new List<object> { fileName } );
+            export.Add(new List<object> { user, computerName, ip, dynamoversion, filename, ip } );
 
             return export;
         }

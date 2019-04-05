@@ -21,8 +21,7 @@ namespace Tracker
         private MenuItem _extensionMenu;
         private ViewLoadedParams _viewLoadedParams;
         private DynamoViewModel _dynamoViewModel => _viewLoadedParams.DynamoWindow.DataContext as DynamoViewModel;
-
-
+        
         /// <summary>
         /// Method that is called when Dynamo starts, but is not yet ready to be used.
         /// </summary>
@@ -42,6 +41,10 @@ namespace Tracker
         {
             // hold a reference to the Dynamo params to be used later
             _viewLoadedParams = vlp;
+            
+            // we can register our own events that will be triggered when specific things happen in Dynamo
+            // a reference to the ReadyParams is needed to do this, so we pass it on
+            TrackerEvents.RegisterRunEventHandlers((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
 
             // we can now add custom menu items to Dynamo's UI
             TrackerMenuItems();

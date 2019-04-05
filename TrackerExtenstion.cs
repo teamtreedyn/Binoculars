@@ -26,6 +26,7 @@ namespace Tracker
         public void Startup(StartupParams sp)
         {
             DynamoVersion = sp.DynamoVersion.ToString();
+            TrackerEvents.DynamoVersion = sp.DynamoVersion;
         }
 
         /// <summary>
@@ -37,7 +38,6 @@ namespace Tracker
         /// </param>
         public void Ready(ReadyParams rp)
         {
-
             string message = "By pressing OK you agreeing to Tracker 🔍 data collection.";
             string title = "Tracker 🔍 Terms of Usage Agreement";
 

@@ -1,5 +1,7 @@
 ﻿using Dynamo.Extensions;
 using Dynamo.Graph.Nodes;
+using Dynamo.Models;
+using System;
 using System.Windows;
 
 namespace Tracker
@@ -7,6 +9,7 @@ namespace Tracker
     public static class TrackerEvents
     {
         private static ReadyParams DynamoReadyParams;
+        private static DynamoModel Model;
         private static string fileName;
         public static string FileName
         {
@@ -22,6 +25,9 @@ namespace Tracker
                 }
             }
         }
+
+        internal static Version DynamoVersion;
+
         /// <summary>
         /// Registers custom events to be triggered when something happens in Dynamo.
         /// </summary>
@@ -42,6 +48,7 @@ namespace Tracker
         public static void UnregisterEventHandlers()
         {
             DynamoReadyParams.CurrentWorkspaceChanged -= OnCurrentWorkspaceChanged;
+            Model.RunCompleted -= OnGraphRun;
         }
 
         /// <summary>
@@ -51,13 +58,38 @@ namespace Tracker
         private static void OnCurrentWorkspaceChanged(Dynamo.Graph.Workspaces.IWorkspaceModel obj)
         {
             FileName = DynamoReadyParams.CurrentWorkspaceModel.FileName;
-            
-            MessageBox.Show($"Congratulations on opening the {obj.Name} workspace!");
 
-            // WE HOOK UP HERE 
+            MessageBox.Show($"Congratulations on opening the {obj.Name} workspace!");
+            
+            string DynamoVersion = string.Empty;
             MessageBox.Show($"The current Graph name is {FileName}");
-            var dataToExport = ExportData.Export(DynamoReadyParams.CurrentWorkspaceModel);
+
+            var dataToExport = ExportData.Export(FileName, DynamoVersion);
             ExportSheets.Execute(dataToExport);
+
+
+        }
+
+        internal static void RegisterRunEventHandlers(DynamoModel model)
+        {
+            model.RunCompleted += OnGraphRun;
+
+            // Set the Model - priceless!
+            Model = model;
+        }
+
+        private static void OnGraphRun(object sender, bool success)
+        {
+            // WE HOOK UP HERE 
+            if (success)
+            {
+                string DynamoVersion = string.Empty;
+                MessageBox.Show($"The current Graph name is {FileName}");
+
+                var dataToExport = ExportData.Export(FileName, DynamoVersion);
+                ExportSheets.Execute(dataToExport);
+
+            }
         }
     }
 }
