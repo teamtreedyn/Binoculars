@@ -40,8 +40,6 @@ namespace Tracker
         /// </param>
         public void Loaded(ViewLoadedParams vlp)
         {
-            
-
             // hold a reference to the Dynamo params to be used later
             _viewLoadedParams = vlp;
 

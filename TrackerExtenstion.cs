@@ -39,12 +39,12 @@ namespace Tracker
             string title = "Tracker 🔍 Terms of Usage Agreement";
 
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
+            
            
 
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
-            TrackerEvents.RegisterEventHandlers(rp);
+            TrackerEvents.RegisterEventHandlers(rp);            
         }
 
         /// <summary>
