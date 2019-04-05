@@ -15,6 +15,9 @@ namespace Tracker
         public string UniqueId => "4DB6C8D9-7D8E-42A8-8995-E14ACFA037CF";
         public string Name => "Tracker View Extension";
 
+
+        private string UserName = Environment.UserName;
+
         private MenuItem _extensionMenu;
         private ViewLoadedParams _viewLoadedParams;
         private DynamoViewModel _dynamoViewModel => _viewLoadedParams.DynamoWindow.DataContext as DynamoViewModel;
@@ -37,33 +40,33 @@ namespace Tracker
         /// </param>
         public void Loaded(ViewLoadedParams vlp)
         {
-            MessageBox.Show("Hello there, Tracker has loaded!");
+            
 
             // hold a reference to the Dynamo params to be used later
             _viewLoadedParams = vlp;
 
             // we can now add custom menu items to Dynamo's UI
-            MakeMenuItems();
+            TrackerMenuItems();
         }
 
         /// <summary>
         /// Adds custom menu items to the Dynamo menu
         /// </summary>
-        public void MakeMenuItems()
+        public void TrackerMenuItems()
         {
             // let's now create a completely top-level new menu item
-            _extensionMenu = new MenuItem {Header = "Tracker"};
+            _extensionMenu = new MenuItem {Header = "Tracker 🔍"};
 
             // and now we add a new sub-menu item that says hello when clicked
-            var sayHelloMenuItem = new MenuItem {Header = "Freak User"};
+            var sayHelloMenuItem = new MenuItem {Header = "❕ User Tracking Information"};
             sayHelloMenuItem.Click += (sender, args) =>
             {
-                MessageBox.Show("Hello " + Environment.UserName + " you are being watched!");
+                MessageBox.Show("Hello " + UserName.ToUpper() + ", we at Tracker 🔍 just want to let you know that collecting user data is common practice in modern websites and applications as a way of providing creators with more information to make decisions and create better experiences. Among other benefits, data can be used to help tailor content, drive product direction, and provide insight into problems in current implementations. Collecting relevant information and using it wisely can give organizations an edge over competitors and increase the impact of limited resources.");
             };
 
 
             // now make a hackathon worthy menu item
-            var hackMenuItem = new MenuItem {Header = "Tracker Information"};
+            var hackMenuItem = new MenuItem {Header = "〽 Company Tracker Information"};
             hackMenuItem.Click += (sender, args) => { Process.Start("https://www.google.com/search?biw=1707&bih=801&tbm=isch&sa=1&ei=kXenXJXRMI6HrwShk4vgCw&q=impressive+statistical+stuff&oq=impressive+statistical+stuff&gs_l=img.3...1791.5141..5399...0.0..0.140.648.8j1......1....1..gws-wiz-img.......0i24.aoH3n_7DImU"); };
 
             // add all menu items to menu
