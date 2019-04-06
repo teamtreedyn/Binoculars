@@ -65,4 +65,4 @@ Collecting a sample set of information from the internet, we used python nodes t
 
 __________________
 
-*We propose that in future version the notifications can be edited to appear at designated time intervals instead of at every use
+*We propose that in future version of Binoculars the GDPR notifications can be edited to appear at designated time intervals instead of at every use
