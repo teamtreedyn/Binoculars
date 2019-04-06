@@ -47,7 +47,7 @@ The tracker appears as a drop down on the menu bar, with information about the i
 
 ![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide14.PNG)
 
-Obviously any data monitoring has GDPR (or similar!) implications so we built in a popup that alerts the use. 
+Obviously any data monitoring has GDPR (or similar!) implications so we built in a popup that makes the user aware that their data is being tracked.
 
 The code can be broken down into 3 main pieces 
 
