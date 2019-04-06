@@ -1,19 +1,29 @@
 # Binoculars #
-{literally watching your every move*}   *not really, just when your graph runs. 🔍
+if you press run, you can't hide... 🔍
 ________________
 
 ### What ###
 
-A user friendly tracker for Dynamo, that reports key stats about Dynamo Use to Google sheets, which can be visualised using a report template in Google Data Store with an option to embed the report in your personal/company website.
+Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use to Google sheets, and visualised using Google Data Store which can be embeded in your personal/company website and used to observe Dynamo use, diagnose outdated Dynamo versions .
 
 ### How it works ###
 
+Download the github repository, use visual studio (or similar) to add to a new google sheets file ID. On build it will be placed in the correct location for ongoing Dynamo use. This build works with Dynamo Sandbox, but can be edited to work with Dynamo for Revit. 
+
+Once installed Binoculars will run when you run a Dynamo graph.
+
+Further work is required to facilitate wider implementation to overcome google authentication, and legal requirements.
+
+Visualising the data - we've created a template in Google Data Studio that can be connected to your Google Sheet to show your results. 
 
 ### Why ###
 
+Collecting data about your dynamo script use can help in so many ways, we've identified three catagories of users but there are probably many more
+- executive level - understanding the benefits/return on investment of dynamo use
+- diagnostics - evaluate where outdated versions of Dynamo or graphs are use
+- users - see which scripts are used the most, identify champion users to go to for help
 
-
-### Contribute ###
+### Please contribute ###
 
 Binoculars is a community project arising out of the UKDUG Hackathon April 2019. Feel free to make suggestions, track and submit bugs. 
 _____________
@@ -31,6 +41,12 @@ Rather than relying on the graph user to add a custom/zero touch node to their s
 The tracker appears as a drop down on the menu bar, with information about the information that is being collected, and access to the report produced from the data collected.
 
 Obviously any data monitoring has GDPR (or similar!) implications so we built in a popup that alerts the use. 
+
+The code can be broken down into 3 main pieces 
+
+- We have event triggers UI elements privacy screen - what event?
+- Collecting the data, done on evaluation complete 
+- Publish data collected using Post request to google sheets
 
 
 
