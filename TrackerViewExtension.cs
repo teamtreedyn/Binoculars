@@ -2,6 +2,7 @@
 using Dynamo.Wpf.Extensions;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,7 +14,7 @@ namespace Tracker
     public class TrackerViewExtension : IViewExtension
     {
         public string UniqueId => "4DB6C8D9-7D8E-42A8-8995-E14ACFA037CF";
-        public string Name => "Tracker View Extension";
+        public string Name => "Binoculars View Extension";
 
 
         private string UserName = Environment.UserName;
@@ -53,26 +54,33 @@ namespace Tracker
         /// <summary>
         /// Adds custom menu items to the Dynamo menu
         /// </summary>
+        
+        public string ToTitleCase(string str)
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
+        }
+
         public void TrackerMenuItems()
         {
             // let's now create a completely top-level new menu item
-            _extensionMenu = new MenuItem {Header = "Tracker 🔍"};
+            _extensionMenu = new MenuItem {Header = "Binoculars 🔍" };
 
             // and now we add a new sub-menu item that says hello when clicked
-            var sayHelloMenuItem = new MenuItem {Header = "❕ User Tracking Information"};
+            var sayHelloMenuItem = new MenuItem {Header = " ❓ About"};
             sayHelloMenuItem.Click += (sender, args) =>
             {
-                MessageBox.Show("Hello " + UserName.ToUpper() + ", we at Tracker 🔍 just want to let you know that collecting user data is common practice in modern websites and applications as a way of providing creators with more information to make decisions and create better experiences. Among other benefits, data can be used to help tailor content, drive product direction, and provide insight into problems in current implementations. Collecting relevant information and using it wisely can give organizations an edge over competitors and increase the impact of limited resources.");
+                MessageBox.Show("Hello " + ToTitleCase(UserName) + "👋🏻\n\nWe at Binoculars just want to let you know that collecting user data is common practice in modern websites and applications as a way of providing creators with more information to make decisions and create better experiences. \n\nAmong other benefits, data can be used to help tailor content, drive product direction, and provide insight into problems in current implementations. Collecting relevant information and using it wisely can give organizations an edge over competitors and increase the impact of limited resources. \n\nKind Regards,\n\nAll the Team @ Binoculars.");
             };
 
 
             // now make a hackathon worthy menu item
-            var hackMenuItem = new MenuItem {Header = "〽 Company Tracker Information"};
-            hackMenuItem.Click += (sender, args) => { Process.Start("https://www.google.com/search?biw=1707&bih=801&tbm=isch&sa=1&ei=kXenXJXRMI6HrwShk4vgCw&q=impressive+statistical+stuff&oq=impressive+statistical+stuff&gs_l=img.3...1791.5141..5399...0.0..0.140.648.8j1......1....1..gws-wiz-img.......0i24.aoH3n_7DImU"); };
+            var hackMenuItem = new MenuItem {Header = "☁ Data" };
+            hackMenuItem.Click += (sender, args) => { Process.Start("https://datastudio.google.com/s/jfnD88Nn6mA"); };
 
             // add all menu items to menu
-            _extensionMenu.Items.Add(sayHelloMenuItem);
+            
             _extensionMenu.Items.Add(hackMenuItem);
+            _extensionMenu.Items.Add(sayHelloMenuItem);
 
             // finally, we need to add our menu to Dynamo
             _viewLoadedParams.dynamoMenu.Items.Add(_extensionMenu);

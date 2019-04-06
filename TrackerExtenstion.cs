@@ -15,7 +15,7 @@ namespace Tracker
     {
         public string UniqueId => "3B234622-43B7-4EA8-86DA-54FB390BE29E";
 
-        public string Name => "Tracker Extension";
+        public string Name => "Binoculars Extension";
 
         public string DynamoVersion;
 
@@ -38,8 +38,8 @@ namespace Tracker
         /// </param>
         public void Ready(ReadyParams rp)
         {
-            string message = "By pressing OK you agreeing to Tracker 🔍 data collection.";
-            string title = "Tracker 🔍 Terms of Usage Agreement";
+            string message = "By pressing OK you agreeing to Binoculars 🔍 data collection.";
+            string title = "Terms of Use Agreement";
 
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             
