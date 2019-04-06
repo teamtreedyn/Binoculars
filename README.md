@@ -1,4 +1,4 @@
-![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/tracker.png)
+![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide1.PNG)
 
 # Binoculars #
 if you press run, you can't hide... 🔍
