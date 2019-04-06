@@ -9,24 +9,24 @@ Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use t
 ![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide6.PNG)
 
 
-### How it works ###
+### How to use it ###
 
 Download the github repository, use visual studio (or similar) to add to a new google sheets file ID. On build it will be placed in the correct location for ongoing Dynamo use. This build works with Dynamo Sandbox, but can be edited to work with Dynamo for Revit. 
 
-Once installed Binoculars will run when you run a Dynamo graph.
+Once installed Binoculars will activate when you run a Dynamo graph.
 
 Further work is required to facilitate wider implementation to overcome google authentication, and legal requirements.
 
-Visualising the data - we've created a template in Google Data Studio that can be connected to your Google Sheet to show your results. 
+*Visualising the data* we've created a template in Google Data Studio that can be connected to your Google Sheet to show your results. 
 
 ![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Copy_of_ET_Dashboard-1.png)
 
 ### Why ###
 
 Collecting data about your dynamo script use can help in so many ways, we've identified three catagories of users but there are probably many more
-- executive level - understanding the benefits/return on investment of dynamo use
-- diagnostics - evaluate where outdated versions of Dynamo or graphs are use
-- users - see which scripts are used the most, identify champion users to go to for help
+- *Executive Level* understanding the benefits/return on investment of dynamo use
+- *Diagnostics* evaluate where outdated versions of Dynamo or graphs are use
+- *Users* see which scripts are used the most, identify champion users to go to for help
 
 ### Please contribute ###
 
