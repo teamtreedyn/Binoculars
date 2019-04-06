@@ -91,10 +91,14 @@ namespace Tracker
         /// <param name="e"></param>
         private static void OnEvaulationCompleted(object sender, EvaluationCompletedEventArgs e)
         {
+            /*
             if (FileName == null)
             {
                 FileName = "New Graph";
             }
+            */
+
+            // @todo if EvaluationCount greater than 1..
 
             // WORKS
             MessageBox.Show($"The current Graph name is {FileName}");
