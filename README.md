@@ -1,12 +1,13 @@
 ![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide1.PNG)
-
-# Binoculars #
-if you press run, you can't hide... 🔍
 ________________
 
 ### What ###
 
 Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use to Google sheets, and visualised using Google Data Store which can be embeded in your personal/company website and used to observe Dynamo use, diagnose outdated Dynamo versions .
+
+
+![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide6.PNG)
+
 
 ### How it works ###
 
