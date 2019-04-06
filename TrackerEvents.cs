@@ -71,7 +71,7 @@ namespace Tracker
         /// <param name="obj">The current Dynamo workspace</param>
         private static void OnCurrentWorkspaceChanged(Dynamo.Graph.Workspaces.IWorkspaceModel obj)
         {
-            FileName = obj.Name;
+            string FileName = obj.Name;
             MessageBox.Show($"Congratulations on opening the {obj.Name} workspace!");
         }
 
@@ -90,7 +90,12 @@ namespace Tracker
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private static void OnEvaulationCompleted(object sender, EvaluationCompletedEventArgs e)
-        {            
+        {
+            if (FileName == null)
+            {
+                FileName = "New Graph";
+            }
+
             // WORKS
             MessageBox.Show($"The current Graph name is {FileName}");
 
