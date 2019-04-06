@@ -19,6 +19,8 @@ Further work is required to facilitate wider implementation to overcome google a
 
 Visualising the data - we've created a template in Google Data Studio that can be connected to your Google Sheet to show your results. 
 
+![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Copy_of_ET_Dashboard-1.png)
+
 ### Why ###
 
 Collecting data about your dynamo script use can help in so many ways, we've identified three catagories of users but there are probably many more
@@ -47,21 +49,10 @@ Obviously any data monitoring has GDPR (or similar!) implications so we built in
 
 The code can be broken down into 3 main pieces 
 
-- We have event triggers UI elements privacy screen - what event?
-- Collecting the data, done on evaluation complete 
-- Publish data collected using Post request to google sheets
+- UI elements including privacy screen on startup
+- Collecting the data, done on 'evaluation complete' 
+- Publishing the data collected using Post Request to Google Sheets
 
-
-
-location - ip address, covert
-exporting to Google sheets - free to use - authorising... Access to Google sheets - give people with a link access
-Associating the action with an event
-Visualising can be done in Google sheets, slicker in Google data store
-connect Google sheets (live linked, can be refreshed at regular intervals)
-User groups
-Filtering information
-Give people with a link access
-Creating a template vs embedding in exe or company website
 ________________
 
 ### Creating the sample data set ###
@@ -69,5 +60,3 @@ ________________
 As a side exercise to help us visualise the data we were expecting to get from the tracker we wrote a dynamo graph to produce a sample data set.
 
 Collecting a sample set of information from the internet, we used python nodes to generate and randomise a series of outputs.
-____
-Dynamo already use google Analytics
