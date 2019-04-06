@@ -17,12 +17,16 @@ namespace Tracker
 
         public string Name => "Tracker Extension";
 
+        public string DynamoVersion;
+
         /// <summary>
         /// Method that is called when Dynamo starts, but is not yet ready to be used.
         /// </summary>
         /// <param name="sp">Parameters that provide references to Dynamo settings and version.</param>
         public void Startup(StartupParams sp)
         {
+            DynamoVersion = sp.DynamoVersion.ToString();
+            TrackerEvents.DynamoVersion = sp.DynamoVersion;
         }
 
         /// <summary>
@@ -34,17 +38,14 @@ namespace Tracker
         /// </param>
         public void Ready(ReadyParams rp)
         {
-
             string message = "By pressing OK you agreeing to Tracker 🔍 data collection.";
             string title = "Tracker 🔍 Terms of Usage Agreement";
 
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-           
-
+            
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
-            TrackerEvents.RegisterEventHandlers(rp);
+            TrackerEvents.RegisterEventHandlers(rp);            
         }
 
         /// <summary>
