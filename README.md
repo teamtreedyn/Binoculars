@@ -45,6 +45,8 @@ Rather than relying on the graph user to add a custom/zero touch node to their s
 
 The tracker appears as a drop down on the menu bar, with information about the information that is being collected, and access to the report produced from the data collected.
 
+![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide14.PNG)
+
 Obviously any data monitoring has GDPR (or similar!) implications so we built in a popup that alerts the use. 
 
 The code can be broken down into 3 main pieces 
