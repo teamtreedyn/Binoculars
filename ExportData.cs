@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Dynamo.Graph.Workspaces;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
@@ -13,6 +14,7 @@ using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace Tracker
 {
@@ -35,14 +37,21 @@ namespace Tracker
             user = Environment.MachineName;
             computerName = Environment.UserName;
             date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
-            string ip = new WebClient().DownloadString("http://icanhazip.com");
-            ip = Regex.Replace(ip, @"\s+", "");
 
-            geo_x = "-50.929371727";
-            geo_y = "20.201284823";
+            WebClient client = new WebClient();
+            client.Headers.Set("Accept", "application/json");
+            var json = client.DownloadString("https://ipinfo.io");
+
+            JObject ipinfo = JObject.Parse(json);
+
+            string ip = Regex.Replace((string)ipinfo["ip"], @"\s+", "");
+            string latlng = (string)ipinfo["loc"];
+            string city = (string)ipinfo["city"];
+            string country = (string)ipinfo["country"];
+
             revitVersion = "2019.0.2";
 
-            export.Add(new List<object> { user, computerName, geo_x, geo_y, dynamoversion, revitVersion, ip, filename, date } );
+            export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoversion, revitVersion, filename, date } );
 
             return export;
         }
