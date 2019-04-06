@@ -25,9 +25,22 @@ namespace Tracker
                 }
             }
         }
-
-        internal static Version DynamoVersion;
-
+        private static string dynamoVersion;
+        public static string DynamoVersion
+        {
+            get
+            {
+                return dynamoVersion;
+            }
+            set
+            {
+                if (dynamoVersion != value)
+                {
+                    dynamoVersion = value;
+                }
+            }
+        }
+        
         /// <summary>
         /// Registers custom events to be triggered when something happens in Dynamo.
         /// </summary>
@@ -49,6 +62,7 @@ namespace Tracker
         {
             DynamoReadyParams.CurrentWorkspaceChanged -= OnCurrentWorkspaceChanged;
             Model.RunCompleted -= OnGraphRun;
+            Model.EvaluationCompleted -= OnEvaulationCompleted;
         }
 
         /// <summary>
@@ -57,30 +71,36 @@ namespace Tracker
         /// <param name="obj">The current Dynamo workspace</param>
         private static void OnCurrentWorkspaceChanged(Dynamo.Graph.Workspaces.IWorkspaceModel obj)
         {
-            FileName = DynamoReadyParams.CurrentWorkspaceModel.FileName;
-
+            FileName = obj.Name;
             MessageBox.Show($"Congratulations on opening the {obj.Name} workspace!");
-            
-            string DynamoVersion = string.Empty;
-            MessageBox.Show($"The current Graph name is {FileName}");
-
-            var dataToExport = ExportData.Export(FileName, DynamoVersion);
-            ExportSheets.Execute(dataToExport);
-
-
         }
 
         internal static void RegisterRunEventHandlers(DynamoModel model)
         {
             model.RunCompleted += OnGraphRun;
+            model.EvaluationCompleted += OnEvaulationCompleted;
 
             // Set the Model - priceless!
             Model = model;
         }
 
+        /// <summary>
+        /// When the graph is evaluated .. ?
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void OnEvaulationCompleted(object sender, EvaluationCompletedEventArgs e)
+        {            
+            // WORKS
+            MessageBox.Show($"The current Graph name is {FileName}");
+
+            var dataToExport = ExportData.Export(FileName, DynamoVersion);
+            ExportSheets.Execute(dataToExport);            
+        }
+
         private static void OnGraphRun(object sender, bool success)
         {
-            // WE HOOK UP HERE 
+            // DOES NOT WORK
             if (success)
             {
                 string DynamoVersion = string.Empty;
@@ -88,7 +108,6 @@ namespace Tracker
 
                 var dataToExport = ExportData.Export(FileName, DynamoVersion);
                 ExportSheets.Execute(dataToExport);
-
             }
         }
     }

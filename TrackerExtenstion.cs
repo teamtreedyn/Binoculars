@@ -26,7 +26,7 @@ namespace Tracker
         public void Startup(StartupParams sp)
         {
             DynamoVersion = sp.DynamoVersion.ToString();
-            TrackerEvents.DynamoVersion = sp.DynamoVersion;
+            TrackerEvents.DynamoVersion = DynamoVersion;
         }
 
         /// <summary>

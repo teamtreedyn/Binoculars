@@ -12,6 +12,7 @@ using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
+using System.Text.RegularExpressions;
 
 namespace Tracker
 {
@@ -35,8 +36,13 @@ namespace Tracker
             computerName = Environment.UserName;
             date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             string ip = new WebClient().DownloadString("http://icanhazip.com");
+            ip = Regex.Replace(ip, @"\s+", "");
 
-            export.Add(new List<object> { user, computerName, ip, dynamoversion, filename, ip } );
+            geo_x = "-50.929371727";
+            geo_y = "20.201284823";
+            revitVersion = "2019.0.2";
+
+            export.Add(new List<object> { user, computerName, geo_x, geo_y, dynamoversion, revitVersion, ip, filename, date } );
 
             return export;
         }
