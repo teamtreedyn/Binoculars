@@ -20,39 +20,27 @@ namespace Tracker
 {
     public static class ExportData
     {
-        private static string user;
-        private static string computerName;
-        private static string geo_x;
-        private static string geo_y;
-        private static string dynamoVersion;
-        private static string revitVersion;
-        private static string ip;
-        private static string filename;
+        internal static string user;
+        internal static string computerName;
+        internal static string dynamoVersion;
+        internal static string revitVersion;
+        internal static string ip;
+        internal static string latlng;
+        internal static string city;
+        internal static string country;
+        internal static string filename;
         private static string date;
 
-        internal static IList<IList<object>> Export(string filename, string dynamoversion)
+        internal static IList<IList<object>> Export()
         {
             IList<IList<object>> export = new List<IList<object>>();
 
-            user = Environment.MachineName;
-            computerName = Environment.UserName;
+            // Set the date
+            // @todo "hh" is incorrectly returning values in the afternoon. It should be "14" not "2" etc for any hour after midday
             date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
 
-            WebClient client = new WebClient();
-            client.Headers.Set("Accept", "application/json");
-            var json = client.DownloadString("https://ipinfo.io");
-
-            JObject ipinfo = JObject.Parse(json);
-
-            string ip = Regex.Replace((string)ipinfo["ip"], @"\s+", "");
-            string latlng = (string)ipinfo["loc"];
-            string city = (string)ipinfo["city"];
-            string country = (string)ipinfo["country"];
-
-            revitVersion = "2019.0.2";
-
-            export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoversion, revitVersion, filename, date } );
-
+            // Create and return a list of all the ExportData strings
+            export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date } );
             return export;
         }
     }
@@ -91,18 +79,12 @@ namespace Tracker
             });
 
             // Define request parameters.
+            // @todo Fetch these from a config.json file or environment variables?
             String spreadsheetId = "1-NNRsKhonKzNmTrl2H3IfwIZvGTy0HMs6AvXhsw-nUc";
+            String spreadsheetTab = "Test Data";
 
-            String range = "Test Data!A2:E";
-            //SpreadsheetsResource.ValuesResource.GetRequest request =
-            //        service.Spreadsheets.Values.Get(spreadsheetId, range);
-
-            //var list1 = new List<object> { "Hi" };
-            //var list2 = new List<object> { "How are you?" };
-
-            //IList<IList<object>> list = new List<IList<object>> { list1, list2 };
-
-            var rng = string.Format("{0}!A1:A{1}", "Test Data", list.Count);
+            // Define the sheet range
+            var rng = string.Format("{0}!A1:A{1}", spreadsheetTab, list.Count);
             var vRange = new ValueRange
             {
                 Range = rng,
@@ -110,29 +92,11 @@ namespace Tracker
                 MajorDimension = "ROWS"
             };
 
+            // Send the request to the Google Sheets API
             var rqst = service.Spreadsheets.Values.Append(vRange, spreadsheetId, rng);
             rqst.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
-
             rqst.Execute();
-
-            // Prints the names and majors of students in a sample spreadsheet:
-            // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-            //ValueRange response = request.Execute();
-            //IList<IList<Object>> values = response.Values;
-            //if (values != null && values.Count > 0)
-            //{
-            //    Console.WriteLine("Name, Major");
-            //    foreach (var row in values)
-            //    {
-            //        // Print columns A and E, which correspond to indices 0 and 4.
-            //        Console.WriteLine("{0}, {1}", row[0], row[4]);
-            //    }
-            //}
-            //else
-            //{
-            //    Console.WriteLine("No data found.");
-            //}
-            //Console.Read();
+            // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable
         }
     }
 }
