@@ -1,4 +1,4 @@
-![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide1.PNG)
+![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide1.PNG)
 ________________
 
 ### What ###
@@ -6,7 +6,7 @@ ________________
 Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use to Google Sheets, which can be visualised using Google Data Store. The data collected can be used to monitor Dynamo use eg. identify use of outdated Dynamo versions, quantify time saved.
 
 
-![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide6.PNG)
+![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide6.PNG)
 
 
 ### How to use it ###
@@ -19,7 +19,7 @@ Further work is required to facilitate wider implementation to overcome google a
 
 *Visualising the data* we've created a template in Google Data Studio that can be connected to your Google Sheet to show your results. 
 
-![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Copy_of_ET_Dashboard-1.png)
+![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Copy_of_ET_Dashboard-1.png)
 
 ### Why ###
 
@@ -45,7 +45,7 @@ Rather than relying on the graph user to add a custom/zero touch node to their s
 
 The tracker appears as a drop down on the menu bar, with information about the information that is being collected, and access to the report produced from the data collected.
 
-![](https://github.com/WaynePatrickDalton/Tracker/blob/master/Images/Slide14.PNG)
+![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide14.PNG)
 
 Obviously any data monitoring has GDPR (or similar!) implications so we built in a popup that makes the user aware that their data is being tracked.
 
