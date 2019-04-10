@@ -3,7 +3,7 @@ ________________
 
 ### What ###
 
-Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use to Google Sheets, which can be visualised using Google Data Store. The data collected can be used to monitor Dynamo use eg. identify use of outdated Dynamo versions, quantify time saved.
+Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use to Google Sheets, which can be visualised using Google Data Studio. The data collected can be used to monitor Dynamo use eg. identify use of outdated Dynamo versions, quantify time saved.
 
 
 ![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide6.PNG)
