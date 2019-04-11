@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: '{branch}.{build}'
 image: Visual Studio 2017
 install:
 - ps: >-
@@ -6,13 +6,9 @@ install:
 
     Start-FileDownload  'https://github.com/DynamoDS/Dynamo/releases/download/v2.1.0/DynamoCoreRuntime2.1.0.zip'
 
-    7z e DynamoCoreRuntime2.1.0.zip -o"../..\..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\" -aoa
-
-    ls "..\..\..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\"
+    7z e DynamoCoreRuntime2.1.0.zip -o"..\..\..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\" -aoa
 build_script:
-- ps: msbuild "C:\projects\binoculars\Tracker.sln" -t:restore /p:TargetFrameworkVersion=v4.7 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-deploy:
-- provider: GitHub
-  auth_token:
-    secure: vw4vXqQ+N9Y4KTFNlukCi+Br7mLhWR2zfy2P8TIjWvIbstFahW0ciEBNw4BQqTnA
-  draft: true
+- ps: >-
+    msbuild "C:\projects\binoculars\Tracker.sln" -t:restore /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
+    ls
