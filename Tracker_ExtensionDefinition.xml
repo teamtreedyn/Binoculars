@@ -1,4 +1,4 @@
 ﻿<ExtensionDefinition>
-  <AssemblyPath>..\bin\Tracker.dll</AssemblyPath>
-  <TypeName>Tracker.TrackerExtension</TypeName>
+  <AssemblyPath>..\bin\Binoculars.dll</AssemblyPath>
+  <TypeName>Binoculars.BinocularsExtension</TypeName>
 </ExtensionDefinition>

@@ -6,12 +6,12 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Tracker
+namespace Binoculars
 {
     /// <summary>
     /// Dynamo View Extension that can control both the Dynamo application and its UI (menus, view, canvas, nodes).
     /// </summary>
-    public class TrackerViewExtension : IViewExtension
+    public class BinocularsViewExtension : IViewExtension
     {
         public string UniqueId => "4DB6C8D9-7D8E-42A8-8995-E14ACFA037CF";
         public string Name => "Binoculars View Extension";
@@ -45,10 +45,10 @@ namespace Tracker
             
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
-            TrackerEvents.RegisterRunEventHandlers((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
+            BinocularsEvents.RegisterRunEventHandlers((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
 
             // we can now add custom menu items to Dynamo's UI
-            TrackerMenuItems();
+            BinocularsMenuItems();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Tracker
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
         }
 
-        public void TrackerMenuItems()
+        public void BinocularsMenuItems()
         {
             // let's now create a completely top-level new menu item
             _extensionMenu = new MenuItem {Header = "Binoculars 🔍" };

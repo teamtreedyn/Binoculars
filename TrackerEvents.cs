@@ -4,9 +4,9 @@ using Dynamo.Models;
 using System;
 using System.Windows;
 
-namespace Tracker
+namespace Binoculars
 {
-    public static class TrackerEvents
+    public static class BinocularsEvents
     {
         private static ReadyParams DynamoReadyParams;
         private static DynamoModel Model;

@@ -1,4 +1,4 @@
 ﻿<ViewExtensionDefinition>
-  <AssemblyPath>..\bin\Tracker.dll</AssemblyPath>
-  <TypeName>Tracker.TrackerViewExtension</TypeName>
+  <AssemblyPath>..\bin\Binoculars.dll</AssemblyPath>
+  <TypeName>Binoculars.BinocularsViewExtension</TypeName>
 </ViewExtensionDefinition>
