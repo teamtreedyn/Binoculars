@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="ExportData.cs" />
     <Compile Include="BinocularsEvents.cs" />
-    <Compile Include="BinocularsExtenstion.cs" />
+    <Compile Include="BinocularsExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BinocularsViewExtension.cs" />
   </ItemGroup>
