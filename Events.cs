@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace Binoculars
 {
-    public static class BinocularsEvents
+    public static class Events
     {
         private static DynamoModel Model;
 
@@ -18,16 +18,16 @@ namespace Binoculars
         private static void OnEvaulationCompleted(object sender, EvaluationCompletedEventArgs e)
         {
             // Record Run Data
-            ExportData.Record(Model.CurrentWorkspace);
+            Data.Record(Model.CurrentWorkspace);
 
             // Display a MessageBox to the user
             // @todo Remove this as it's for testing purposes only
-            string filename = ExportData.filename;
+            string filename = Data.filename;
             MessageBox.Show($"The current Graph name is {filename}");
 
             // When graph evaluation is complete
             // Get all the data we want to store and then store it
-            var dataToExport = ExportData.Export();
+            var dataToExport = Data.Export();
             ExportSheets.Execute(dataToExport);
         }
 
@@ -39,7 +39,7 @@ namespace Binoculars
             }
         }
 
-        internal static void RegisterRunEventHandlers(DynamoModel model)
+        internal static void Register(DynamoModel model)
         {
             // Subscribe our event handler methods to Dynamo
             model.RunCompleted += OnGraphRun;
@@ -52,7 +52,7 @@ namespace Binoculars
         /// <summary>
         /// Removes our custom event handler methods from Dynamo.
         /// </summary>
-        public static void UnregisterEventHandlers()
+        public static void Unregister()
         {
             // Unsubscribe our event handler methods
             Model.RunCompleted -= OnGraphRun;

@@ -19,7 +19,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Binoculars
 {
-    public static class ExportData
+    public static class Data
     {
         internal static string user;
         internal static string computerName;
@@ -39,16 +39,16 @@ namespace Binoculars
             // @todo provide a visual clue to the user that we are in the process of gathering data/geolocating IP which is delaying startup..
 
             // Dynamo StartupParams
-            ExportData.dynamoVersion = vlp.StartupParams.DynamoVersion.ToString();
+            Data.dynamoVersion = vlp.StartupParams.DynamoVersion.ToString();
 
             // @todo Determine whether the script is run from DynamoPlayer..
 
             // Store the local environment data
-            ExportData.user = Environment.MachineName;
-            ExportData.computerName = Environment.UserName;
+            Data.user = Environment.MachineName;
+            Data.computerName = Environment.UserName;
 
             // @todo Define the revitVersion, leave blank or null if opened from any other environment (Sandbox, Civil3D etc)
-            ExportData.revitVersion = "2019.0.2";
+            Data.revitVersion = "2019.0.2";
 
             // Request the IP and geolocation from ipinfo.io
             WebClient client = new WebClient();
@@ -60,18 +60,18 @@ namespace Binoculars
             JObject ipinfo = JObject.Parse(json);
 
             // Store geolocation data
-            ExportData.ip = (string)ipinfo["ip"];
-            ExportData.latlng = (string)ipinfo["loc"];
-            ExportData.city = (string)ipinfo["city"];
-            ExportData.country = (string)ipinfo["country"];
+            Data.ip = (string)ipinfo["ip"];
+            Data.latlng = (string)ipinfo["loc"];
+            Data.city = (string)ipinfo["city"];
+            Data.country = (string)ipinfo["country"];
         }
 
         public static void Record(WorkspaceModel workspace)
         {
-            ExportData.filename = workspace.Name;
-            // ExportData.filepath = workspace.FileName;
-            // ExportData.evaluationCount = workspace.EvaluationCount;
-            // ExportData.packages = workspace.Dependencies;
+            Data.filename = workspace.Name;
+            // Data.filepath = workspace.FileName;
+            // Data.evaluationCount = workspace.EvaluationCount;
+            // Data.packages = workspace.Dependencies;
         }
 
         internal static IList<IList<object>> Export()
@@ -82,7 +82,7 @@ namespace Binoculars
             // @todo "hh" is incorrectly returning values in the afternoon. It should be "14" not "2" etc for any hour after midday
             date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
 
-            // Create and return a list of all the ExportData strings
+            // Create and return a list of all the Data strings
             export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date } );
             return export;
         }

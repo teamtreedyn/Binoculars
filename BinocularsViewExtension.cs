@@ -51,14 +51,14 @@ namespace Binoculars
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
             // Collect the environment variables
-            ExportData.Collect(vlp);
+            Data.Collect(vlp);
 
             // hold a reference to the Dynamo params to be used later
             _viewLoadedParams = vlp;
             
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
-            BinocularsEvents.RegisterRunEventHandlers((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
+            Events.Register((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
 
             // we can now add custom menu items to Dynamo's UI
             BinocularsMenuItems();
@@ -105,7 +105,7 @@ namespace Binoculars
         /// </summary>
         public void Shutdown()
         {
-            BinocularsEvents.UnregisterEventHandlers();
+            Events.Unregister();
         }
 
         public void Dispose()
