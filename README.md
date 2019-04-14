@@ -30,7 +30,7 @@ Collecting data about your dynamo script use can help in so many ways, we've ide
 
 ### Please contribute ###
 
-Binoculars is a community project arising out of the UKDUG Hackathon April 2019. Feel free to make suggestions, track and submit bugs. 
+Binoculars is a community project arising out of the UKDUG Hackathon April 2019. Feel free to make suggestions through pull requests, track and submit bugs through issues. 
 _____________
 
 ### How we got here ### 
