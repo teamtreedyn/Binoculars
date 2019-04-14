@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="ExportData.cs" />
     <Compile Include="BinocularsEvents.cs" />
-    <Compile Include="BinocularsExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BinocularsViewExtension.cs" />
   </ItemGroup>
@@ -59,9 +58,6 @@
     <None Include="pkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Binoculars_ExtensionDefinition.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Binoculars_ViewExtensionDefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
