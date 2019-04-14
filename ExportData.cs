@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Dynamo.Graph.Workspaces;
+using Dynamo.Wpf.Extensions;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
@@ -30,6 +31,48 @@ namespace Binoculars
         internal static string country;
         internal static string filename;
         private static string date;
+
+        public static void Collect(ViewLoadedParams vlp)
+        {
+
+            // @todo if user does not consent, don't store..
+            // @todo provide a visual clue to the user that we are in the process of gathering data/geolocating IP which is delaying startup..
+
+            // Dynamo StartupParams
+            ExportData.dynamoVersion = vlp.StartupParams.DynamoVersion.ToString();
+
+            // @todo Determine whether the script is run from DynamoPlayer..
+
+            // Store the local environment data
+            ExportData.user = Environment.MachineName;
+            ExportData.computerName = Environment.UserName;
+
+            // @todo Define the revitVersion, leave blank or null if opened from any other environment (Sandbox, Civil3D etc)
+            ExportData.revitVersion = "2019.0.2";
+
+            // Request the IP and geolocation from ipinfo.io
+            WebClient client = new WebClient();
+            client.Headers.Set("Accept", "application/json");
+            var json = client.DownloadString("https://ipinfo.io");
+            // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable
+
+            // Parse the JSON
+            JObject ipinfo = JObject.Parse(json);
+
+            // Store geolocation data
+            ExportData.ip = (string)ipinfo["ip"];
+            ExportData.latlng = (string)ipinfo["loc"];
+            ExportData.city = (string)ipinfo["city"];
+            ExportData.country = (string)ipinfo["country"];
+        }
+
+        public static void Record(WorkspaceModel workspace)
+        {
+            ExportData.filename = workspace.Name;
+            // ExportData.filepath = workspace.FileName;
+            // ExportData.evaluationCount = workspace.EvaluationCount;
+            // ExportData.packages = workspace.Dependencies;
+        }
 
         internal static IList<IList<object>> Export()
         {
