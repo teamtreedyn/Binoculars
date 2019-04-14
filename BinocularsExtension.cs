@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json.Linq;
 
-namespace Tracker
+namespace Binoculars
 {
     /// <summary>
     /// Dynamo extension that controls the underlying Dynamo application but not its UI.
     /// </summary>
-    public class TrackerExtension : IExtension
+    public class BinocularsExtension : IExtension
     {
         public string UniqueId => "3B234622-43B7-4EA8-86DA-54FB390BE29E";
 
@@ -80,7 +80,7 @@ namespace Tracker
             
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
-            TrackerEvents.RegisterEventHandlers(rp);
+            BinocularsEvents.RegisterEventHandlers(rp);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Tracker
         /// </summary>
         public void Shutdown()
         {
-            TrackerEvents.UnregisterEventHandlers();
+            BinocularsEvents.UnregisterEventHandlers();
         }
 
         public void Dispose()

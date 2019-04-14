@@ -16,7 +16,7 @@ using Google.Apis.Util.Store;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
-namespace Tracker
+namespace Binoculars
 {
     public static class ExportData
     {
