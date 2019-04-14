@@ -1,4 +1,0 @@
-﻿<ExtensionDefinition>
-  <AssemblyPath>..\bin\Tracker.dll</AssemblyPath>
-  <TypeName>Tracker.TrackerExtension</TypeName>
-</ExtensionDefinition>

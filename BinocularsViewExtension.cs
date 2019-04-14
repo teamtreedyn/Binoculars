@@ -1,21 +1,24 @@
-﻿using Dynamo.ViewModels;
+﻿
+using Dynamo.Extensions;
+using Dynamo.ViewModels;
 using Dynamo.Wpf.Extensions;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using Newtonsoft.Json.Linq;
 
-namespace Tracker
+namespace Binoculars
 {
     /// <summary>
     /// Dynamo View Extension that can control both the Dynamo application and its UI (menus, view, canvas, nodes).
     /// </summary>
-    public class TrackerViewExtension : IViewExtension
+    public class BinocularsViewExtension : IViewExtension
     {
         public string UniqueId => "4DB6C8D9-7D8E-42A8-8995-E14ACFA037CF";
         public string Name => "Binoculars View Extension";
-
 
         private string UserName = Environment.UserName;
 
@@ -40,27 +43,36 @@ namespace Tracker
         /// </param>
         public void Loaded(ViewLoadedParams vlp)
         {
+
+            // Display a MessageBox to the user
+            // @todo Use a view framework to improve the UI/UX
+            string message = "By pressing OK you agreeing to Binoculars 🔍 data collection.";
+            string title = "Terms of Use Agreement";
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+            // Collect the environment variables
+            ExportData.Collect(vlp);
+
             // hold a reference to the Dynamo params to be used later
             _viewLoadedParams = vlp;
             
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
-            TrackerEvents.RegisterRunEventHandlers((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
+            BinocularsEvents.RegisterRunEventHandlers((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
 
             // we can now add custom menu items to Dynamo's UI
-            TrackerMenuItems();
+            BinocularsMenuItems();
         }
 
         /// <summary>
         /// Adds custom menu items to the Dynamo menu
         /// </summary>
-        
         public string ToTitleCase(string str)
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
         }
 
-        public void TrackerMenuItems()
+        public void BinocularsMenuItems()
         {
             // let's now create a completely top-level new menu item
             _extensionMenu = new MenuItem {Header = "Binoculars 🔍" };
@@ -69,6 +81,8 @@ namespace Tracker
             var sayHelloMenuItem = new MenuItem {Header = " ❓ About"};
             sayHelloMenuItem.Click += (sender, args) =>
             {
+                // Display a MessageBox to the user
+                // @todo Use a view framework to improve the UI/UX
                 MessageBox.Show("Hello " + ToTitleCase(UserName) + "👋🏻\n\nWe at Binoculars just want to let you know that collecting user data is common practice in modern websites and applications as a way of providing creators with more information to make decisions and create better experiences. \n\nAmong other benefits, data can be used to help tailor content, drive product direction, and provide insight into problems in current implementations. Collecting relevant information and using it wisely can give organizations an edge over competitors and increase the impact of limited resources. \n\nKind Regards,\n\nAll the Team @ Binoculars.");
             };
 
@@ -91,6 +105,7 @@ namespace Tracker
         /// </summary>
         public void Shutdown()
         {
+            BinocularsEvents.UnregisterEventHandlers();
         }
 
         public void Dispose()

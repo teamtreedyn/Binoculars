@@ -3,7 +3,7 @@ ________________
 
 ### What ###
 
-Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use to Google Sheets, which can be visualised using Google Data Store. The data collected can be used to monitor Dynamo use eg. identify use of outdated Dynamo versions, quantify time saved.
+Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use to Google Sheets, which can be visualised using Google Data Studio. The data collected can be used to monitor Dynamo use eg. identify use of outdated Dynamo versions, quantify time saved.
 
 
 ![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide6.PNG)
@@ -40,10 +40,10 @@ Further developed by Wayne Patrick Dalton and Brendan Cassidy.
 
 The initial version of this extension was developed by Wayne Patrick Dalton, Laurence Elsdon, Deyan Nenov, Caoimhe Loftus, over a period of two days during the UKDUG Hackathon April 2019.
 
-Building on the extensions workshop by Radu Gidei of Enstoa, we decided that an extension was the best way to deploy our tracker. 
+Building on the extensions workshop by Radu Gidei of Enstoa, we decided that an extension was the best way to deploy Binoculars. 
 Rather than relying on the graph user to add a custom/zero touch node to their script - or not to delete it! - the extension triggers when any Dynamo graph is run*. This extension can be installed via the local IT team without any depending on user input.
 
-The tracker appears as a drop down on the menu bar, with information about the information that is being collected, and access to the report produced from the data collected.
+Binoculars appears as a drop down on the menu bar, with information about the information that is being collected, and access to the report produced from the data collected.
 
 ![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide14.PNG)
 
@@ -59,7 +59,7 @@ ________________
 
 ### Creating the sample data set ###
 
-As a side exercise to help us visualise the data we were expecting to get from the tracker we wrote a dynamo graph to produce a sample data set.
+As a side exercise to help us visualise the data we were expecting to get from Binoculars we wrote a dynamo graph to produce a sample data set.
 
 Collecting a sample set of information from the internet, we used python nodes to generate and randomise a series of outputs.
 
