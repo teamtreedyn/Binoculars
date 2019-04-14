@@ -9,6 +9,6 @@ install:
     7z e DynamoCoreRuntime2.1.0.zip -o"..\..\..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\" -aoa
 build_script:
 - ps: >-
-    msbuild "C:\projects\binoculars\Binoculars.sln" -t:restore /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    msbuild "Binoculars.sln" -t:restore /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
     ls
