@@ -98,9 +98,11 @@ namespace Binoculars
         public static void Execute(IList<IList<object>> list)
         {
             UserCredential credential;
+            string assembly = Utils.AssemblyDirectory;
+            string file = "credentials.json";
+            string path = Path.GetFullPath(Path.Combine(assembly, @"..\", file));
 
-            using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 // The file token.json stores the user's access and refresh tokens, and is created
                 // automatically when the authorization flow completes for the first time.
@@ -123,8 +125,8 @@ namespace Binoculars
 
             // Define request parameters.
             // @todo Fetch these from a config.json file or environment variables?
-            String spreadsheetId = "1-NNRsKhonKzNmTrl2H3IfwIZvGTy0HMs6AvXhsw-nUc";
-            String spreadsheetTab = "Test Data";
+            String spreadsheetId = "1A7W8jXxCBpdluOqoOSpVATHcVtDlozI8WicGN1siYRc";
+            String spreadsheetTab = "Sheet1";
 
             // Define the sheet range
             var rng = string.Format("{0}!A1:A{1}", spreadsheetTab, list.Count);
