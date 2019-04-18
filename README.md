@@ -23,12 +23,12 @@ Further work is required to facilitate wider implementation to overcome google a
 
 ### Quickstart ###
 
-1. Clone/download the repository
-2. Make sure all References are set correctly
+1. Clone/download the repository.
+2. Make sure all References are set correctly.
 3. Follow this [link](https://developers.google.com/sheets/api/quickstart/dotnet) to enable Google API and generate credentials.json file. 
 4. Download credentials.json into the root of your project repo.
 5. Create a new Google Sheets document; **Share** it (top-right corner) so that **everyone with the link** can **edit** the document. 
-6. Make not of the Sheet name and the Worksheet name:
+6. Make note of the Sheet name and the Worksheet name:
 <img src="https://github.com/teamtreedyn/Binoculars/blob/master/Images/walkthrough_1.png" alt="wlk_1" height="250"/>
 
 7. In Data.cs replace String spreadsheetId and String spreadsheetTab with the values from your own Google Sheet.
