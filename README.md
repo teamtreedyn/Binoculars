@@ -30,6 +30,7 @@ Further work is required to facilitate wider implementation to overcome google a
 5. Create a new Google Sheets document; **Share** it (top-right corner) so that **everyone with the link** can **edit** the document. 
 6. Make not of the Sheet name and the Worksheet name:
 <img src="https://github.com/teamtreedyn/Binoculars/blob/master/Images/walkthrough_1.png" alt="wlk_1" height="250"/>
+
 7. In Data.cs replace String spreadsheetId and String spreadsheetTab with the values from your own Google Sheet.
 8. Compile, run Dynamo, run a Graph. You should see a new entry appear in your Google Sheet. 
 9. Tap yourself on the shoulder.
