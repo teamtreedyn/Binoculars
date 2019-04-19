@@ -37,18 +37,9 @@ namespace Binoculars
 
         }
 
-        private static void OnGraphRun(object sender, bool success)
-        {
-            // DOES NOT WORK
-            if (success)
-            {
-            }
-        }
-
         internal static void Register(DynamoModel model)
         {
             // Subscribe our event handler methods to Dynamo
-            model.RunCompleted += OnGraphRun;
             model.EvaluationCompleted += OnEvaulationCompleted;
 
             // Set the dynamo model to Model so we can access it whenever required
@@ -61,7 +52,6 @@ namespace Binoculars
         public static void Unregister()
         {
             // Unsubscribe our event handler methods
-            Model.RunCompleted -= OnGraphRun;
             Model.EvaluationCompleted -= OnEvaulationCompleted;
         }
     }
