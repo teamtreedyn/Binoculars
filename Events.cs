@@ -20,15 +20,21 @@ namespace Binoculars
             // Record Run Data
             Data.Record(Model.CurrentWorkspace);
 
-            // Display a MessageBox to the user
-            // @todo Remove this as it's for testing purposes only
-            string filename = Data.filename;
-            MessageBox.Show($"The current Graph name is {filename}");
+            // If running in DEBUG mode display a MessageBox
+            #if DEBUG
+                string[] message = new string[] {
+                    $"Hi {Data.user},",
+                    $"You're currently running {Data.filename} on {Data.computerName} from {Data.city}, {Data.country} using Dynamo {Data.dynamoVersion}."
+                };
+                string title = "Binoculars";
+                MessageBox.Show(string.Join("\n\n", message), title);
+            #endif
 
             // When graph evaluation is complete
             // Get all the data we want to store and then store it
             var dataToExport = Data.Export();
             ExportSheets.Execute(dataToExport);
+
         }
 
         private static void OnGraphRun(object sender, bool success)
