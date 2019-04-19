@@ -44,8 +44,8 @@ namespace Binoculars
             // @todo Determine whether the script is run from DynamoPlayer..
 
             // Store the local environment data
-            Data.user = Environment.MachineName;
-            Data.computerName = Environment.UserName;
+            Data.user = Environment.UserName;
+            Data.computerName = Environment.MachineName;
 
             // @todo Define the revitVersion, leave blank or null if opened from any other environment (Sandbox, Civil3D etc)
             Data.revitVersion = "2019.0.2";
