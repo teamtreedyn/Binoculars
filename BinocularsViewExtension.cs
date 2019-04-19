@@ -25,7 +25,7 @@ namespace Binoculars
         private MenuItem _extensionMenu;
         private ViewLoadedParams _viewLoadedParams;
         private DynamoViewModel _dynamoViewModel => _viewLoadedParams.DynamoWindow.DataContext as DynamoViewModel;
-        
+
         /// <summary>
         /// Method that is called when Dynamo starts, but is not yet ready to be used.
         /// </summary>
@@ -55,7 +55,7 @@ namespace Binoculars
 
             // hold a reference to the Dynamo params to be used later
             _viewLoadedParams = vlp;
-            
+
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
             Events.Register((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
@@ -92,7 +92,7 @@ namespace Binoculars
             hackMenuItem.Click += (sender, args) => { Process.Start("https://datastudio.google.com/s/jfnD88Nn6mA"); };
 
             // add all menu items to menu
-            
+
             _extensionMenu.Items.Add(hackMenuItem);
             _extensionMenu.Items.Add(sayHelloMenuItem);
 
