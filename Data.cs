@@ -89,7 +89,7 @@ namespace Binoculars
     }
 
     public static class ExportSheets
-    {        
+    {
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
         static string[] Scopes = { SheetsService.Scope.Spreadsheets };
