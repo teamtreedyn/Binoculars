@@ -2,6 +2,8 @@ version: '{branch}.{build}'
 image: Visual Studio 2017
 install:
 - ps: >-
+    Start-FileDownload  'https://raw.githubusercontent.com/teamtreedyn/Binoculars/5d9d8d21e952023d830331ef55aaa13b52a7dc21/credentials.json'
+
     mkdir -p "..\..\..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\"
 
     Start-FileDownload  'https://github.com/DynamoDS/Dynamo/releases/download/v2.1.0/DynamoCoreRuntime2.1.0.zip'
@@ -11,6 +13,6 @@ build_script:
 - ps: >-
     nuget restore
 
-    msbuild "Binoculars.sln" /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.7 /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-
-    ls
+    msbuild "Binoculars.sln" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+on_finish:
+- ps: ls
