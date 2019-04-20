@@ -1,0 +1,37 @@
+{
+  "consent": {
+    "requested": true,
+    "given":  true
+  },
+
+  "collect": {
+    "user": true,
+    "computerName": true,
+    "dynamoVersion": true,
+    "revitVersion": true,
+    "ip": true,
+    "geolocation": true,
+    "latlng": true,
+    "city": true,
+    "country": true,
+    "filename": true,
+    "date": true
+  },
+
+  "export": {
+    "method": "googleSheets",
+    "googleSheets": {
+      "id": "YOUR GOOGLE SHEETS ID",
+      "sheet": "YOUR GOOGLE SHEETS SHEET NAME"
+    },
+    "googleSheetsOAuth": {
+      "client_id": "YOUR GOOGLE SHEETS CLIENT_ID",
+      "project_id": "YOUR GOOGLE SHEETS PROJECT_ID",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_secret": "YOUR GOOGLE SHEETS CLIENT_SECRET",
+      "redirect_uris": [ "urn:ietf:wg:oauth:2.0:oob", "http://localhost" ]
+    }
+  }
+}

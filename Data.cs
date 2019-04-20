@@ -39,36 +39,39 @@ namespace Binoculars
             // @todo provide a visual clue to the user that we are in the process of gathering data/geolocating IP which is delaying startup..
 
             // Dynamo StartupParams
-            Data.dynamoVersion = vlp.StartupParams.DynamoVersion.ToString();
+            if((Boolean)Settings.collect["dynamoVersion"]) Data.dynamoVersion = vlp.StartupParams.DynamoVersion.ToString();
 
             // @todo Determine whether the script is run from DynamoPlayer..
 
             // Store the local environment data
-            Data.user = Environment.UserName;
-            Data.computerName = Environment.MachineName;
+            if((Boolean)Settings.collect["user"]) Data.user = Environment.UserName;
+            if((Boolean)Settings.collect["computerName"]) Data.computerName = Environment.MachineName;
 
             // @todo Define the revitVersion, leave blank or null if opened from any other environment (Sandbox, Civil3D etc)
-            Data.revitVersion = "2019.0.2";
+            if((Boolean)Settings.collect["revitVersion"]) Data.revitVersion = "2019.0.2";
 
-            // Request the IP and geolocation from ipinfo.io
-            WebClient client = new WebClient();
-            client.Headers.Set("Accept", "application/json");
-            var json = client.DownloadString("https://ipinfo.io");
-            // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable
+            if((Boolean)Settings.collect["geolocation"])
+            {
+                // Request the IP and geolocation from ipinfo.io
+                WebClient client = new WebClient();
+                client.Headers.Set("Accept", "application/json");
+                var json = client.DownloadString("https://ipinfo.io");
+                // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable
 
-            // Parse the JSON
-            JObject ipinfo = JObject.Parse(json);
+                // Parse the JSON
+                JObject ipinfo = JObject.Parse(json);
 
-            // Store geolocation data
-            Data.ip = (string)ipinfo["ip"];
-            Data.latlng = (string)ipinfo["loc"];
-            Data.city = (string)ipinfo["city"];
-            Data.country = (string)ipinfo["country"];
+                // Store geolocation data
+                if((Boolean)Settings.collect["ip"]) Data.ip = (string)ipinfo["ip"];
+                if((Boolean)Settings.collect["latlng"]) Data.latlng = (string)ipinfo["loc"];
+                if((Boolean)Settings.collect["city"]) Data.city = (string)ipinfo["city"];
+                if((Boolean)Settings.collect["country"]) Data.country = (string)ipinfo["country"];
+            }
         }
 
         public static void Record(WorkspaceModel workspace)
         {
-            Data.filename = workspace.Name;
+            if((Boolean)Settings.collect["filename"]) Data.filename = workspace.Name;
             // Data.filepath = workspace.FileName;
             // Data.evaluationCount = workspace.EvaluationCount;
             // Data.packages = workspace.Dependencies;
@@ -80,7 +83,7 @@ namespace Binoculars
 
             // Set the date
             // @todo "hh" is incorrectly returning values in the afternoon. It should be "14" not "2" etc for any hour after midday
-            date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            if((Boolean)Settings.collect["date"]) date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
 
             // Create and return a list of all the Data strings
             export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date } );
@@ -125,8 +128,8 @@ namespace Binoculars
 
             // Define request parameters.
             // @todo Fetch these from a config.json file or environment variables?
-            String spreadsheetId = "1A7W8jXxCBpdluOqoOSpVATHcVtDlozI8WicGN1siYRc";
-            String spreadsheetTab = "Sheet1";
+            String spreadsheetId = (string)Settings.export["googleSheets"]["id"];
+            String spreadsheetTab = (string)Settings.export["googleSheets"]["sheet"];
 
             // Define the sheet range
             var rng = string.Format("{0}!A1:A{1}", spreadsheetTab, list.Count);

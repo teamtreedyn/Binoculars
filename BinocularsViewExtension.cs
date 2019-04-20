@@ -43,25 +43,68 @@ namespace Binoculars
         /// </param>
         public void Loaded(ViewLoadedParams vlp)
         {
+            // hold a reference to the Dynamo params to be used later
+            _viewLoadedParams = vlp;
 
-            // Display a MessageBox to the user
-            // @todo Use a view framework to improve the UI/UX
-            string message = "By pressing OK you agreeing to Binoculars 🔍 data collection.";
-            string title = "Terms of Use Agreement";
-            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            // we can now add custom menu items to Dynamo's UI
+            BinocularsMenuItems();
+
+            // Load user/organisation settings
+            Settings.Load();
+
+            string message;
+            string title;
+            string[] messages;
+
+            if ( ! (Boolean)Settings.consent["requested"])
+            {
+                // If consent has NOT been requested then ask for it!
+                // Display a MessageBox to the user
+                // @todo Use a view framework to improve the UI/UX
+                message = "By pressing OK you agreeing to Binoculars 🔍 data collection.";
+                title = "Terms of Use Agreement";
+                MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+
+            // @todo Add a method to record the user's consent response
+
+            // Check for consent
+            if ( ! (Boolean)Settings.consent["given"])
+            {
+                // If consent has NOT been given
+
+                // If running in DEBUG mode display a MessageBox
+                #if DEBUG
+                    messages = new string[] {
+                            "Hi Anonymous,",
+                            "You didn't give us consent to record your details so I guess it's goodbye for now.",
+                            "But, perhaps we can still be friends?"
+                        };
+                    title = "Binoculars";
+                    MessageBox.Show(string.Join("\n\n", messages), title);
+                #endif
+
+                // The user did not consent so we must cease and desist
+                return;
+
+            }
 
             // Collect the environment variables
             Data.Collect(vlp);
 
-            // hold a reference to the Dynamo params to be used later
-            _viewLoadedParams = vlp;
+            // Consent must have been given if we've reached this point so let the user know what we know about them.
+            #if DEBUG
+                messages = new string[] {
+                    $"Hi {Data.user},",
+                    $"You're currently on {Data.computerName} from {Data.city}, {Data.country} using Dynamo {Data.dynamoVersion}."
+                };
+                title = "Binoculars";
+                MessageBox.Show(string.Join("\n\n", messages), title);
+            #endif
 
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
             Events.Register((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
-
-            // we can now add custom menu items to Dynamo's UI
-            BinocularsMenuItems();
         }
 
         /// <summary>

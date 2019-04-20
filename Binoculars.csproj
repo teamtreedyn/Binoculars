@@ -50,10 +50,14 @@
     <Compile Include="Events.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BinocularsViewExtension.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -146,6 +150,7 @@
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourcePkg Include="$(ProjectDir)pkg.json" />
       <SourcePkg Include="$(ProjectDir)credentials.json" />
+      <SourcePkg Include="$(ProjectDir)settings.json" />
       <SourceExtension Include="$(TargetDir)*ExtensionDefinition.xml" />
     </ItemGroup>
     <!--Delete any previous build folder -->
