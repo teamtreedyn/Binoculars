@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Binoculars
 {
@@ -19,6 +15,18 @@ namespace Binoculars
                 string path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
             }
+        }
+        /// <summary>
+        /// If run from Revit, returns Revit version
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetRevitData()
+        {
+            Autodesk.Revit.DB.Document doc = RevitServices.Persistence.DocumentManager.Instance.CurrentDBDocument;
+            Autodesk.Revit.UI.UIApplication uiapp = RevitServices.Persistence.DocumentManager.Instance.CurrentUIApplication;
+            Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
+
+            return String.Format("Revit Build: {0}", app.SubVersionNumber);
         }
     }
 }
