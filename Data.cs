@@ -31,10 +31,10 @@ namespace Binoculars
         internal static string country;
         internal static string filename;
         private static string date;
+        private static string ID;
 
         public static void Collect(ViewLoadedParams vlp)
         {
-
             // @todo if user does not consent, don't store..
             // @todo provide a visual clue to the user that we are in the process of gathering data/geolocating IP which is delaying startup..
 
@@ -69,6 +69,7 @@ namespace Binoculars
         public static void Record(WorkspaceModel workspace)
         {
             Data.filename = workspace.Name;
+            Data.ID = workspace.Guid.ToString();
             // Data.filepath = workspace.FileName;
             // Data.evaluationCount = workspace.EvaluationCount;
             // Data.packages = workspace.Dependencies;
@@ -83,7 +84,7 @@ namespace Binoculars
             date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
 
             // Create and return a list of all the Data strings
-            export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date } );
+            export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date, ID } );
             return export;
         }
     }
