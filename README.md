@@ -26,15 +26,18 @@ Further work is required to facilitate wider implementation to overcome google a
 1. Clone/download the repository.
 2. Make sure all References are set correctly.
 3. Follow this [link](https://developers.google.com/sheets/api/quickstart/dotnet) to enable Google API and generate credentials.json file.
-4. Download credentials.json into the root of your project repo.
+4. Download credentials.json into the root of your project repo. (While testing, we failed collecting the file using IE. Try using Chrome if you experience a similar issue).
 5. Create a new Google Sheets document; **Share** it (top-right corner) so that **everyone with the link** can **edit** the document.
 6. Make note of the Sheet name and the Worksheet name:
 <img src="https://github.com/teamtreedyn/Binoculars/blob/master/Images/walkthrough_1.png" alt="wlk_1" height="250"/>
 
-7. In Data.cs replace String spreadsheetId and String spreadsheetTab with the values from your own Google Sheet.
+7. In Data.cs replace String spreadsheetId and String spreadsheetTab with the values from your own Google Sheet. (Line 128)
 8. Compile, run Dynamo, run a Graph. You should see a new entry appear in your Google Sheet.
 9. Tap yourself on the shoulder.
 
+### Disclaimer ###
+
+Creating and distributing credentials.json file will expose the Google account associated with it in some ways. Please, investigate the concept before commiting further. Using a neutral Google account might be the best option if you don't understand the repercussions of using Google API fully.
 
 ### Why ###
 
