@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using Dynamo.Graph.Workspaces;
 using Dynamo.Wpf.Extensions;
 using Google.Apis.Auth.OAuth2;
@@ -14,7 +10,6 @@ using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
 namespace Binoculars
@@ -30,11 +25,16 @@ namespace Binoculars
         internal static string city;
         internal static string country;
         internal static string filename;
+        internal static string revit_build;
         private static string date;
+        private static string ID;
 
+        /// <summary>
+        /// The general data collecting method
+        /// </summary>
+        /// <param name="vlp">View Loaded Parameters from Dynamo</param>
         public static void Collect(ViewLoadedParams vlp)
         {
-
             // @todo if user does not consent, don't store..
             // @todo provide a visual clue to the user that we are in the process of gathering data/geolocating IP which is delaying startup..
 
@@ -65,15 +65,22 @@ namespace Binoculars
             Data.city = (string)ipinfo["city"];
             Data.country = (string)ipinfo["country"];
         }
-
+        /// <summary>
+        /// Record data from the Graph
+        /// </summary>
+        /// <param name="workspace">The Workspace - ie the Dynamo Graph</param>
         public static void Record(WorkspaceModel workspace)
         {
             Data.filename = workspace.Name;
+            Data.ID = workspace.Guid.ToString();
             // Data.filepath = workspace.FileName;
             // Data.evaluationCount = workspace.EvaluationCount;
             // Data.packages = workspace.Dependencies;
         }
-
+        /// <summary>
+        /// Generate the export message to be recorded in Google Sheets
+        /// </summary>
+        /// <returns></returns>
         internal static IList<IList<object>> Export()
         {
             IList<IList<object>> export = new List<IList<object>>();
@@ -83,11 +90,18 @@ namespace Binoculars
             date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
 
             // Create and return a list of all the Data strings
-            export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date } );
+            var exportData = new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date, ID };
+            // Add Revit information if it exists
+            if (!string.IsNullOrEmpty(revit_build))
+                exportData.Add(revit_build);
+
+            export.Add(exportData);
             return export;
         }
     }
-
+    /// <summary>
+    /// Exports the collected data to Google Sheets
+    /// </summary>
     public static class ExportSheets
     {
         // If modifying these scopes, delete your previously saved credentials
@@ -101,12 +115,12 @@ namespace Binoculars
             string assembly = Utils.AssemblyDirectory;
             string file = "credentials.json";
             string path = Path.GetFullPath(Path.Combine(assembly, @"..\", file));
+            string credPath = Path.GetFullPath(Path.Combine(assembly, @"..\", "token.json"));
 
             using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 // The file token.json stores the user's access and refresh tokens, and is created
                 // automatically when the authorization flow completes for the first time.
-                string credPath = "token.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,

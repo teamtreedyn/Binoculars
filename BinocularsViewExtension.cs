@@ -1,14 +1,10 @@
-﻿
-using Dynamo.Extensions;
-using Dynamo.ViewModels;
+﻿using Dynamo.ViewModels;
 using Dynamo.Wpf.Extensions;
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using Newtonsoft.Json.Linq;
 
 namespace Binoculars
 {
@@ -43,7 +39,6 @@ namespace Binoculars
         /// </param>
         public void Loaded(ViewLoadedParams vlp)
         {
-
             // Display a MessageBox to the user
             // @todo Use a view framework to improve the UI/UX
             string message = "By pressing OK you agreeing to Binoculars 🔍 data collection.";
@@ -56,9 +51,21 @@ namespace Binoculars
             // hold a reference to the Dynamo params to be used later
             _viewLoadedParams = vlp;
 
+            var dynamoViewModel = vlp.DynamoWindow.DataContext as DynamoViewModel;
             // we can register our own events that will be triggered when specific things happen in Dynamo
             // a reference to the ReadyParams is needed to do this, so we pass it on
-            Events.Register((vlp.DynamoWindow.DataContext as DynamoViewModel).Model);
+            Events.Register(dynamoViewModel.Model);
+
+            // Add Revit data, if run from inside Revit
+            // 10x Brendan Cassidy https://knowledge.autodesk.com/community/screencast/2f26aab4-bbdb-4935-84e1-bdd0e012a1dc
+            if (dynamoViewModel.HostName.ToLower().Contains("revit"))
+            {
+                //Autodesk.Revit.DB.Document doc = RevitServices.Persistence.DocumentManager.Instance.CurrentDBDocument;
+                //Autodesk.Revit.UI.UIApplication uiapp = RevitServices.Persistence.DocumentManager.Instance.CurrentUIApplication;
+                //Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
+
+                Data.revit_build = Utils.GetRevitData();
+            }
 
             // we can now add custom menu items to Dynamo's UI
             BinocularsMenuItems();
