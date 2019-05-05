@@ -48,23 +48,35 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Data.cs" />
-    <Compile Include="Events.cs" />
+    <Compile Include="Export\Amazon.cs" />
+    <Compile Include="Export\Comma.cs" />
+    <Compile Include="Export\Excel.cs" />
+    <Compile Include="Export\Google.cs" />
+    <Compile Include="Export\Json.cs" />
+    <Compile Include="Extension\Events.cs" />
+    <Compile Include="Extension\Extenstion.cs" />
+    <Compile Include="Extension\ViewExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BinocularsViewExtension.cs" />
-    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="Settings\Paths.cs" />
+    <Compile Include="Splash\ImagePop.xaml.cs">
+      <DependentUpon>ImagePop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\Config.cs" />
+    <Compile Include="Utilities\Data.cs" />
+    <Compile Include="Utilities\Format.cs" />
+    <Compile Include="Utilities\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="credentials.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <None Include="pkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Binoculars_ViewExtensionDefinition.xml">
+    <None Include=".gitignore" />
+    <Content Include="Definitions\Binoculars_ExtensionDefinition.xml" />
+    <Content Include="Definitions\Binoculars_ViewExtensionDefinition.xml" />
+    <None Include="Settings\userconfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="DynamoCore">
@@ -143,6 +155,19 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Settings\credentials.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Splash\ImagePop.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Binoculars_Splash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
   </PropertyGroup>
@@ -159,8 +184,8 @@
       <SourceDlls Include="$(TargetDir)*.dll" />
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourcePkg Include="$(ProjectDir)pkg.json" />
-      <SourcePkg Include="$(ProjectDir)credentials.json" />
-      <SourceExtension Include="$(TargetDir)*ExtensionDefinition.xml" />
+      <SourcePkg Include="$(ProjectDir)Settings\credentials.json" />
+      <SourceExtension Include="$(ProjectDir)Definitions\*ExtensionDefinition.xml" />
     </ItemGroup>
     <!--Delete any previous build folder -->
     <RemoveDir Directories="$(TargetDir)$(ProjectName)" />

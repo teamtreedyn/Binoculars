@@ -1,20 +1,19 @@
-﻿using Dynamo.Extensions;
-using Dynamo.Graph.Nodes;
-using Dynamo.Models;
-using System;
+﻿using Dynamo.Models;
 using System.Windows;
+using Binoculars.Export;
+using Binoculars.Utilities;
 
-namespace Binoculars
+namespace Binoculars.Extension
 {
     public static class Events
     {
-        private static DynamoModel Model;
+        public static DynamoModel Model;
 
         /// <summary>
         /// When the graph is evaluated .. ?
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
+
         private static void OnEvaulationCompleted(object sender, EvaluationCompletedEventArgs e)
         {
             // Record Run Data
@@ -23,17 +22,17 @@ namespace Binoculars
             // If running in DEBUG mode display a MessageBox
             #if DEBUG
                 string[] message = new string[] {
-                    $"Hi {Data.user},",
-                    $"You're currently running {Data.filename} on {Data.computerName} from {Data.city}, {Data.country} using Dynamo {Data.dynamoVersion}."
+                    $"Hello {Data.User},",
+                    $"You're currently running {Data.Filename} on {Data.ComputerName} from {Data.City}, {Data.Country} using Dynamo {Data.DynamoVersion}."
                 };
-                string title = "Binoculars";
+                const string title = "DEBUG Binoculars 🔍";
                 MessageBox.Show(string.Join("\n\n", message), title);
             #endif
 
             // When graph evaluation is complete
             // Get all the data we want to store and then store it
             var dataToExport = Data.Export();
-            ExportSheets.Execute(dataToExport);
+            GoogleSheets.Execute(dataToExport);
 
         }
 

@@ -1,0 +1,4 @@
+﻿<ViewExtensionDefinition>
+  <AssemblyPaths>..\bin\Binoculars.dll</AssemblyPaths>
+  <TypeName>Binoculars.ViewExtension</TypeName>
+</ViewExtensionDefinition>

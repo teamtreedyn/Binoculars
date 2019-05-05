@@ -1,0 +1,23 @@
+<Window x:Class="Binoculars.Splash.ImagePop"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       
+        Title="SplashPop" Width="500" Height= "500"  BorderThickness="0" AllowsTransparency="True">
+   
+    <Window.Background>
+        <SolidColorBrush Opacity="0.5" Color="Black"/>
+    </Window.Background>
+    
+    <!-- todo -> get this silly splash screen to load an Binoculars Splash image, its driving me crazy -->
+    <StackPanel>
+        <Button>Button 1</Button>
+        
+        <Image Width="360" Height="360" Margin="0">
+            <Image.Source>
+                <BitmapImage UriSource="Resources/Binoculars_Splash.png" />
+            </Image.Source>
+        </Image>
+        <Button>Button 2</Button>
+    </StackPanel>
+    
+</Window>
