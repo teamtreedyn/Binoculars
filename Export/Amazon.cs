@@ -1,7 +1,7 @@
 namespace Binoculars.Export
 {
     /// <summary>
-    /// Here we are adding the custom Amazon AWS connection exporter
+    /// Adding the custom Amazon AWS connection exporter
     /// </summary>
 
     public class Amazon

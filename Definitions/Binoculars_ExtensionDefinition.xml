@@ -1,4 +1,4 @@
 ﻿<ExtensionDefinition>
   <AssemblyPaths>..\bin\Binoculars.dll</AssemblyPaths>
-  <TypeName>Binoculars.Binoculars.Extension</TypeName>
+  <TypeName>Binoculars.Extension.Extension</TypeName>
 </ExtensionDefinition>
