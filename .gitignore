@@ -7,6 +7,7 @@
 *.userosscache
 *.sln.docstates
 credentials.json
+dynamosheets.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

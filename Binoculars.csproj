@@ -58,6 +58,9 @@
     <None Include="credentials.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="dynamosheets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="pkg.json" />
   </ItemGroup>
@@ -160,6 +163,7 @@
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourcePkg Include="$(ProjectDir)pkg.json" />
       <SourcePkg Include="$(ProjectDir)credentials.json" />
+      <SourcePkg Include="$(ProjectDir)dynamosheets.json" />
       <SourceExtension Include="$(TargetDir)*ExtensionDefinition.xml" />
     </ItemGroup>
     <!--Delete any previous build folder -->
@@ -176,9 +180,9 @@
     </ItemGroup>
     <PropertyGroup>
       <!--Copy to Dynamo sandbox for testing -->
-      <DeployFolder Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'">$(AppData)\Dynamo\Dynamo Core\2.0\packages\$(ProjectName)</DeployFolder>
+      <DeployFolder Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'">$(AppData)\Dynamo\Dynamo Core\2.1\packages\$(ProjectName)</DeployFolder>
       <!--Copy to Dynamo revit for publishing -->
-      <DeployFolder Condition="'$(Configuration)' == 'DebugRevit'">$(AppData)\Dynamo\Dynamo Revit\2.0\packages\$(ProjectName)</DeployFolder>
+      <DeployFolder Condition="'$(Configuration)' == 'DebugRevit'">$(AppData)\Dynamo\Dynamo Revit\2.1\packages\$(ProjectName)</DeployFolder>
     </PropertyGroup>
     <!--Delete any previous package directory with same name -->
     <RemoveDir Directories="$(DeployFolder)" />
