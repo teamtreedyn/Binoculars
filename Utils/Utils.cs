@@ -26,7 +26,7 @@ namespace Binoculars
             Autodesk.Revit.UI.UIApplication uiapp = RevitServices.Persistence.DocumentManager.Instance.CurrentUIApplication;
             Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
 
-            return String.Format("Revit Build: {0}", app.SubVersionNumber);
+            return app.SubVersionNumber;
         }
     }
 }

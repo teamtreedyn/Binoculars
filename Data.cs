@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using Dynamo.Graph.Workspaces;
+using Dynamo.ViewModels;
 using Dynamo.Wpf.Extensions;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
@@ -25,7 +26,6 @@ namespace Binoculars
         internal static string city;
         internal static string country;
         internal static string filename;
-        internal static string revit_build;
         private static string date;
         private static string ID;
 
@@ -48,7 +48,17 @@ namespace Binoculars
             if((Boolean)Settings.collect["computerName"]) Data.computerName = Environment.MachineName;
 
             // @todo Define the revitVersion, leave blank or null if opened from any other environment (Sandbox, Civil3D etc)
-            if((Boolean)Settings.collect["revitVersion"]) Data.revitVersion = "2019.0.2";
+            if((Boolean)Settings.collect["revitVersion"])
+            {
+                var dynamoViewModel = vlp.DynamoWindow.DataContext as DynamoViewModel;
+
+                // Add Revit data, if run from inside Revit
+                // 10x Brendan Cassidy https://knowledge.autodesk.com/community/screencast/2f26aab4-bbdb-4935-84e1-bdd0e012a1dc
+                if (dynamoViewModel.HostName.ToLower().Contains("revit"))
+                {
+                    Data.revitVersion = Utils.GetRevitData();
+                }
+            }
 
             if((Boolean)Settings.collect["geolocation"])
             {
@@ -94,9 +104,6 @@ namespace Binoculars
 
             // Create and return a list of all the Data strings
             var exportData = new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date, ID };
-            // Add Revit information if it exists
-            if (!string.IsNullOrEmpty(revit_build))
-                exportData.Add(revit_build);
 
             export.Add(exportData);
             return export;
