@@ -121,10 +121,6 @@ namespace Binoculars
 
         public static void Execute(IList<IList<object>> list)
         {
-            // Set the token.json path
-            string assembly = Utils.AssemblyDirectory;
-            string credPath = Path.GetFullPath(Path.Combine(assembly, @"..\", "token.json"));
-
             // Set some basic variable to initialise Google Sheets API
             string[] Scopes = { SheetsService.Scope.Spreadsheets };
             string serviceAccountEmail = (String)Settings.export["googleSheetsServiceAccount"]["client_email"];
