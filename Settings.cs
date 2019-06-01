@@ -12,7 +12,11 @@ namespace Binoculars
 
         public static void Load()
         {
-            using (StreamReader r = new StreamReader("settings.json"))
+            // Build the path
+            string assembly = Utils.AssemblyDirectory;
+            string path = Path.GetFullPath(Path.Combine(assembly, @"..\", "settings.json"));
+
+            using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
                 JObject jobj = JObject.Parse(json);
