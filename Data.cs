@@ -139,22 +139,6 @@ namespace Binoculars
                 credential = new ServiceAccountCredential(initializer);
             }
 
-
-            /*
-            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "users",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
-            }
-            */
-
             // Create Google Sheets API service.
             var service = new SheetsService(new BaseClientService.Initializer()
             {
@@ -180,7 +164,7 @@ namespace Binoculars
             var rqst = service.Spreadsheets.Values.Append(vRange, spreadsheetId, rng);
             rqst.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
             rqst.Execute();
-            // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable
+            // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable or a 403 forbidden occurs
         }
     }
 }
