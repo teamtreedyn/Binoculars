@@ -13,12 +13,11 @@ namespace Binoculars
     /// </summary>
     public class BinocularsViewExtension : IViewExtension
     {
-        public string UniqueId => "4DB6C8D9-7D8E-42A8-8995-E14ACFA037CF";
         public string Name => "Binoculars View Extension";
 
         private string UserName = Environment.UserName;
 
-        private MenuItem _extensionMenu;
+        private MenuItem menu;
         private ViewLoadedParams _viewLoadedParams;
         private DynamoViewModel _dynamoViewModel => _viewLoadedParams.DynamoWindow.DataContext as DynamoViewModel;
 
@@ -42,11 +41,11 @@ namespace Binoculars
             // hold a reference to the Dynamo params to be used later
             _viewLoadedParams = vlp;
 
-            // we can now add custom menu items to Dynamo's UI
-            BinocularsMenuItems();
-
             // Load user/organisation settings
             Settings.Load();
+
+            // we can now add custom menu items to Dynamo's UI
+            BinocularsMenuItems();
 
             string message;
             string title;
@@ -115,29 +114,41 @@ namespace Binoculars
         public void BinocularsMenuItems()
         {
             // let's now create a completely top-level new menu item
-            _extensionMenu = new MenuItem {Header = "Binoculars 🔍" };
+            menu = new MenuItem {Header = "Binoculars 🔍" };
 
             // and now we add a new sub-menu item that says hello when clicked
-            var sayHelloMenuItem = new MenuItem {Header = " ❓ About"};
-            sayHelloMenuItem.Click += (sender, args) =>
+            var aboutMenu = new MenuItem {Header = " ❓ About"};
+            aboutMenu.Click += (sender, args) =>
             {
                 // Display a MessageBox to the user
                 // @todo Use a view framework to improve the UI/UX
                 MessageBox.Show("Hello " + ToTitleCase(UserName) + "👋🏻\n\nWe at Binoculars just want to let you know that collecting user data is common practice in modern websites and applications as a way of providing creators with more information to make decisions and create better experiences. \n\nAmong other benefits, data can be used to help tailor content, drive product direction, and provide insight into problems in current implementations. Collecting relevant information and using it wisely can give organizations an edge over competitors and increase the impact of limited resources. \n\nKind Regards,\n\nAll the Team @ Binoculars.");
             };
+            menu.Items.Add(aboutMenu);
 
+            // Create an item linking to the Google Sheet if we're using it
+            if ((String)Settings.export["method"] == "googleSheets")
+            {
+                var googleSheetMenu = new MenuItem { Header = "🧾 Google Sheet" };
+                googleSheetMenu.Click += (sender, args) => {
+                    Process.Start("https://docs.google.com/spreadsheets/d/" + (String)Settings.export["googleSheets"]["id"]);
+                };
+                menu.Items.Add(googleSheetMenu);
+            }
 
-            // now make a hackathon worthy menu item
-            var hackMenuItem = new MenuItem {Header = "☁ Data" };
-            hackMenuItem.Click += (sender, args) => { Process.Start("https://datastudio.google.com/s/jfnD88Nn6mA"); };
-
-            // add all menu items to menu
-
-            _extensionMenu.Items.Add(hackMenuItem);
-            _extensionMenu.Items.Add(sayHelloMenuItem);
+            // Create an item linking to the Google Data Studio Dashboard if we're using it
+            if ((String)Settings.dashboard["method"] == "googleDataStudio")
+            {
+                var googleDataStudioMenu = new MenuItem { Header = "📈 Google Data Studio" };
+                googleDataStudioMenu.Click += (sender, args) =>
+                {
+                    Process.Start("https://datastudio.google.com/reporting/" + (String)Settings.dashboard["id"]);
+                };
+                menu.Items.Add(googleDataStudioMenu);
+            }
 
             // finally, we need to add our menu to Dynamo
-            _viewLoadedParams.dynamoMenu.Items.Add(_extensionMenu);
+            _viewLoadedParams.dynamoMenu.Items.Add(menu);
         }
 
         /// <summary>
@@ -150,6 +161,18 @@ namespace Binoculars
 
         public void Dispose()
         {
+        }
+
+        /// <summary>
+        /// Unique GUID
+        /// From: https://developer.dynamobim.org/03-Development-Options/3-6-extensions.html
+        /// </summary>
+        public string UniqueId
+        {
+            get
+            {
+                return Guid.NewGuid().ToString();
+            }
         }
     }
 }

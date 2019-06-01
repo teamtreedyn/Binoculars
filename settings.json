@@ -1,7 +1,7 @@
 {
   "consent": {
     "requested": true,
-    "given":  true
+    "given": true
   },
 
   "collect": {
@@ -16,6 +16,11 @@
     "country": true,
     "filename": true,
     "date": true
+  },
+
+  "dashboard": {
+    "method": "googleDataStudio",
+    "id": "YOUR GOOGLE DATA STUDIO REPORT ID"
   },
 
   "export": {
