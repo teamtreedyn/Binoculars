@@ -139,7 +139,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitServices">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Dynamo\Dynamo Revit\2\Revit_2018\RevitServices.dll</HintPath>
+      <HintPath>lib\RevitServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -181,9 +181,9 @@
     </ItemGroup>
     <PropertyGroup>
       <!--Copy to Dynamo sandbox for testing -->
-      <DeployFolder Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'">$(AppData)\Dynamo\Dynamo Core\2.0\packages\$(ProjectName)</DeployFolder>
+      <DeployFolder Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'">$(AppData)\Dynamo\Dynamo Core\2.1\packages\$(ProjectName)</DeployFolder>
       <!--Copy to Dynamo revit for publishing -->
-      <DeployFolder Condition="'$(Configuration)' == 'DebugRevit'">$(AppData)\Dynamo\Dynamo Revit\2.0\packages\$(ProjectName)</DeployFolder>
+      <DeployFolder Condition="'$(Configuration)' == 'DebugRevit'">$(AppData)\Dynamo\Dynamo Revit\2.1\packages\$(ProjectName)</DeployFolder>
     </PropertyGroup>
     <!--Delete any previous package directory with same name -->
     <RemoveDir Directories="$(DeployFolder)" />
