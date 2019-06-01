@@ -111,23 +111,32 @@ namespace Binoculars
 
         public static void Execute(IList<IList<object>> list)
         {
-            UserCredential credential;
+            //UserCredential credential;
             string assembly = Utils.AssemblyDirectory;
-            string file = "credentials.json";
+            string file = "dynamosheets.json";
+            //string file = "credentials.json";
             string path = Path.GetFullPath(Path.Combine(assembly, @"..\", file));
             string credPath = Path.GetFullPath(Path.Combine(assembly, @"..\", "token.json"));
 
-            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            //var certificate = new X509Certificate2(@"key.p12", "notasecret", X509KeyStorageFlags.Exportable);
+
+            ServiceAccountCredential credential;
+
+            string[] Scopes = { SheetsService.Scope.Spreadsheets };
+            string serviceAccountEmail = "binocularsserviceaccount@quickstart-1554479480474.iam.gserviceaccount.com";
+
+            using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "users",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
+                credential = (ServiceAccountCredential)
+                    GoogleCredential.FromStream(stream).UnderlyingCredential;
+
+                var initializer = new ServiceAccountCredential.Initializer(credential.Id)
+                {
+                    User = serviceAccountEmail,
+                    Key = credential.Key,
+                    Scopes = Scopes
+                };
+                credential = new ServiceAccountCredential(initializer);
             }
 
             // Create Google Sheets API service.
@@ -155,7 +164,7 @@ namespace Binoculars
             var rqst = service.Spreadsheets.Values.Append(vRange, spreadsheetId, rng);
             rqst.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
             rqst.Execute();
-            // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable
+            // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable or a 403 forbidden occurs
         }
     }
 }
