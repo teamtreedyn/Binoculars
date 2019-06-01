@@ -113,9 +113,6 @@ namespace Binoculars
 
                 Data.revit_build = Utils.GetRevitData();
             }
-
-            // we can now add custom menu items to Dynamo's UI
-            BinocularsMenuItems();
         }
 
         /// <summary>

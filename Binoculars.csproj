@@ -56,9 +56,6 @@
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="credentials.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -163,7 +160,6 @@
       <SourceDlls Include="$(TargetDir)*.dll" />
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourcePkg Include="$(ProjectDir)pkg.json" />
-      <SourcePkg Include="$(ProjectDir)credentials.json" />
       <SourcePkg Include="$(ProjectDir)settings.json" />
       <SourceExtension Include="$(TargetDir)*ExtensionDefinition.xml" />
     </ItemGroup>

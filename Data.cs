@@ -110,37 +110,28 @@ namespace Binoculars
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
         static string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        static string ApplicationName = "Google Sheets API .NET Quickstart";
+        static string ApplicationName = "Binoculars Export to Google Sheets";
 
         public static void Execute(IList<IList<object>> list)
         {
-            //UserCredential credential;
+            // Set the token.json path
             string assembly = Utils.AssemblyDirectory;
-            string file = "dynamosheets.json";
-            //string file = "credentials.json";
-            string path = Path.GetFullPath(Path.Combine(assembly, @"..\", file));
             string credPath = Path.GetFullPath(Path.Combine(assembly, @"..\", "token.json"));
 
-            //var certificate = new X509Certificate2(@"key.p12", "notasecret", X509KeyStorageFlags.Exportable);
-
-            ServiceAccountCredential credential;
-
+            // Set some basic variable to initialise Google Sheets API
             string[] Scopes = { SheetsService.Scope.Spreadsheets };
-            string serviceAccountEmail = "binocularsserviceaccount@quickstart-1554479480474.iam.gserviceaccount.com";
+            string serviceAccountEmail = (String)Settings.export["googleSheetsServiceAccount"]["client_email"];
+            string key = (String)Settings.export["googleSheetsServiceAccount"]["private_key"];
 
-            using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            // Initialise the Google API ServiceAccount
+            var initializer = new ServiceAccountCredential.Initializer(serviceAccountEmail)
             {
-                credential = (ServiceAccountCredential)
-                    GoogleCredential.FromStream(stream).UnderlyingCredential;
+                User = serviceAccountEmail,
+                Scopes = Scopes
+            };
 
-                var initializer = new ServiceAccountCredential.Initializer(credential.Id)
-                {
-                    User = serviceAccountEmail,
-                    Key = credential.Key,
-                    Scopes = Scopes
-                };
-                credential = new ServiceAccountCredential(initializer);
-            }
+            // Set the ServiceAccount Key
+            ServiceAccountCredential credential = new ServiceAccountCredential(initializer.FromPrivateKey(key));
 
             // Create Google Sheets API service.
             var service = new SheetsService(new BaseClientService.Initializer()
@@ -150,7 +141,6 @@ namespace Binoculars
             });
 
             // Define request parameters.
-            // @todo Fetch these from a config.json file or environment variables?
             String spreadsheetId = (string)Settings.export["googleSheets"]["id"];
             String spreadsheetTab = (string)Settings.export["googleSheets"]["sheet"];
 
