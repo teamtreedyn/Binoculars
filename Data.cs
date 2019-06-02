@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -35,9 +36,6 @@ namespace Binoculars
         /// <param name="vlp">View Loaded Parameters from Dynamo</param>
         public static void Collect(ViewLoadedParams vlp)
         {
-            // @todo if user does not consent, don't store..
-            // @todo provide a visual clue to the user that we are in the process of gathering data/geolocating IP which is delaying startup..
-
             // Dynamo StartupParams
             if((Boolean)Settings.collect["dynamoVersion"]) Data.dynamoVersion = vlp.StartupParams.DynamoVersion.ToString();
 
@@ -47,7 +45,6 @@ namespace Binoculars
             if((Boolean)Settings.collect["user"]) Data.user = Environment.UserName;
             if((Boolean)Settings.collect["computerName"]) Data.computerName = Environment.MachineName;
 
-            // @todo Define the revitVersion, leave blank or null if opened from any other environment (Sandbox, Civil3D etc)
             if((Boolean)Settings.collect["revitVersion"])
             {
                 var dynamoViewModel = vlp.DynamoWindow.DataContext as DynamoViewModel;
@@ -62,20 +59,38 @@ namespace Binoculars
 
             if((Boolean)Settings.collect["geolocation"])
             {
-                // Request the IP and geolocation from ipinfo.io
-                WebClient client = new WebClient();
-                client.Headers.Set("Accept", "application/json");
-                var json = client.DownloadString("https://ipinfo.io");
-                // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable
+                try
+                {
+                    // Request the IP and geolocation from ipinfo.io
+                    WebClient client = new WebClient();
+                    client.Headers.Set("Accept", "application/json");
+                    var json = client.DownloadString("https://ipinfo.io");
 
-                // Parse the JSON
-                JObject ipinfo = JObject.Parse(json);
+                    // Parse the JSON
+                    JObject ipinfo = JObject.Parse(json);
 
-                // Store geolocation data
-                if((Boolean)Settings.collect["ip"]) Data.ip = (string)ipinfo["ip"];
-                if((Boolean)Settings.collect["latlng"]) Data.latlng = (string)ipinfo["loc"];
-                if((Boolean)Settings.collect["city"]) Data.city = (string)ipinfo["city"];
-                if((Boolean)Settings.collect["country"]) Data.country = (string)ipinfo["country"];
+                    // Store geolocation data
+                    if ((Boolean)Settings.collect["ip"]) Data.ip = (string)ipinfo["ip"];
+                    if ((Boolean)Settings.collect["latlng"]) Data.latlng = (string)ipinfo["loc"];
+                    if ((Boolean)Settings.collect["city"]) Data.city = (string)ipinfo["city"];
+                    if ((Boolean)Settings.collect["country"]) Data.country = (string)ipinfo["country"];
+                }
+
+                catch (System.Net.WebException e) {
+                    //Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+                    //Debug.AutoFlush = true;
+                    //Debug.Indent();
+                    Debug.WriteLine(string.Join("\n\n", new string[] {
+                        "",
+                        $"'{e}'",
+                        "Connection to ipinfo.io failed.",
+                        "Are you offline?",
+                        e.Message,
+                        "Continuing without collecting IP and geolocation data.",
+                        ""
+                    }));
+                    //Debug.Unindent();
+                }
             }
         }
         /// <summary>
@@ -121,46 +136,126 @@ namespace Binoculars
 
         public static void Execute(IList<IList<object>> list)
         {
-            // Set some basic variable to initialise Google Sheets API
-            string[] Scopes = { SheetsService.Scope.Spreadsheets };
-            string serviceAccountEmail = (String)Settings.export["googleSheetsServiceAccount"]["client_email"];
-            string key = (String)Settings.export["googleSheetsServiceAccount"]["private_key"];
-
-            // Initialise the Google API ServiceAccount
-            var initializer = new ServiceAccountCredential.Initializer(serviceAccountEmail)
+            try
             {
-                User = serviceAccountEmail,
-                Scopes = Scopes
-            };
+                // Set some basic variable to initialise Google Sheets API
+                string[] Scopes = { SheetsService.Scope.Spreadsheets };
+                string serviceAccountEmail = (String)Settings.export["googleSheetsServiceAccount"]["client_email"];
+                string key = (String)Settings.export["googleSheetsServiceAccount"]["private_key"];
 
-            // Set the ServiceAccount Key
-            ServiceAccountCredential credential = new ServiceAccountCredential(initializer.FromPrivateKey(key));
+                // Initialise the Google API ServiceAccount
+                var initializer = new ServiceAccountCredential.Initializer(serviceAccountEmail)
+                {
+                    User = serviceAccountEmail,
+                    Scopes = Scopes
+                };
 
-            // Create Google Sheets API service.
-            var service = new SheetsService(new BaseClientService.Initializer()
+                // Set the ServiceAccount Key
+                ServiceAccountCredential credential = new ServiceAccountCredential(initializer.FromPrivateKey(key));
+
+                // Create Google Sheets API service.
+                var service = new SheetsService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
+
+                // Define request parameters.
+                String spreadsheetId = (string)Settings.export["googleSheets"]["id"];
+                String spreadsheetTab = (string)Settings.export["googleSheets"]["sheet"];
+
+                // Define the sheet range
+                var rng = string.Format("{0}!A1:A{1}", spreadsheetTab, list.Count);
+                var vRange = new ValueRange
+                {
+                    Range = rng,
+                    Values = list,
+                    MajorDimension = "ROWS"
+                };
+
+                // Send the request to the Google Sheets API
+                var rqst = service.Spreadsheets.Values.Append(vRange, spreadsheetId, rng);
+                rqst.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
+                rqst.Execute();
+            }
+
+            catch (System.Net.Http.HttpRequestException e)
             {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
+                Debug.WriteLine(string.Join("\n\n", new string[] {
+                    "",
+                    $"'{e}'",
+                    "Connection to Google Sheets API failed.",
+                    "Are you offline?",
+                    e.Message,
+                    "Continuing without exporting to Google Sheets.",
+                    ""
+                }));
+            }
 
-            // Define request parameters.
-            String spreadsheetId = (string)Settings.export["googleSheets"]["id"];
-            String spreadsheetTab = (string)Settings.export["googleSheets"]["sheet"];
-
-            // Define the sheet range
-            var rng = string.Format("{0}!A1:A{1}", spreadsheetTab, list.Count);
-            var vRange = new ValueRange
+            catch (Google.GoogleApiException e)
             {
-                Range = rng,
-                Values = list,
-                MajorDimension = "ROWS"
-            };
+                if (e.Error.Code == 403)
+                {
+                    Debug.WriteLine(string.Join("\n\n", new string[] {
+                        "",
+                        $"'{e}'",
+                        "Google Sheets API request was forbidden.",
+                        "Have you enabled the Google Sheets API?.",
+                        e.Error.Message,
+                        "Continuing without exporting to Google Sheets.",
+                        ""
+                    }));
+                }
+                else if (e.Error.Code == 404)
+                {
+                    Debug.WriteLine(string.Join("\n\n", new string[] {
+                        "",
+                        $"'{e}'",
+                        "The Google Sheet could not be found.",
+                        "Check export.googleSheets.id is set correctly in settings.json",
+                        e.Error.Message,
+                        "Continuing without exporting to Google Sheets.",
+                        ""
+                    }));
+                }
+                else if (e.Error.Code == 400)
+                {
+                    Debug.WriteLine(string.Join("\n\n", new string[] {
+                        "",
+                        $"'{e}'",
+                        "The data range or sheet/tab name within the Google Sheet could not be found.",
+                        "Check export.googleSheets.sheet is correctly set to the sheet/tab name in settings.json",
+                        "The default is usually 'Sheet1'",
+                        e.Error.Message,
+                        "Continuing without exporting to Google Sheets.",
+                        ""
+                    }));
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            // Send the request to the Google Sheets API
-            var rqst = service.Spreadsheets.Values.Append(vRange, spreadsheetId, rng);
-            rqst.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
-            rqst.Execute();
-            // @todo We need to check the request was actually sent successfully and gracefully deal with cases where the API is unavailable or a 403 forbidden occurs
+            catch (System.ArgumentException e)
+            {
+                if (e.ParamName == "pkcs8PrivateKey")
+                {
+                    Debug.WriteLine(string.Join("\n\n", new string[] {
+                        "",
+                        $"'{e}'",
+                        "Invalid Google Service Account API Key.",
+                        "Check export.googleSheetsServiceAccount.private_key is set correctly in settings.json",
+                        e.Message,
+                        "Continuing without exporting to Google Sheets.",
+                        ""
+                    }));
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
     }
 }

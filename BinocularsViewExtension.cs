@@ -42,7 +42,8 @@ namespace Binoculars
             _viewLoadedParams = vlp;
 
             // Load user/organisation settings
-            Settings.Load();
+            // If it fails then gracefully stop loading the extension.
+            if ( ! Settings.Load()) return;
 
             // we can now add custom menu items to Dynamo's UI
             BinocularsMenuItems();

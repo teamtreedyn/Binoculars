@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using Newtonsoft.Json.Linq;
@@ -12,20 +13,55 @@ namespace Binoculars
         internal static JToken dashboard;
         internal static JToken export;
 
-        public static void Load()
+        public static Boolean Load()
         {
             // Build the path
             string assembly = Utils.AssemblyDirectory;
             string path = Path.GetFullPath(Path.Combine(assembly, @"..\", "settings.json"));
 
-            using (StreamReader r = new StreamReader(path))
+            try
             {
-                string json = r.ReadToEnd();
-                JObject jobj = JObject.Parse(json);
-                Settings.consent = jobj["consent"];
-                Settings.collect = jobj["collect"];
-                Settings.dashboard = jobj["dashboard"];
-                Settings.export = jobj["export"];
+                using (StreamReader r = new StreamReader(path))
+                {
+                    string json = r.ReadToEnd();
+                    JObject jobj = JObject.Parse(json);
+                    Settings.consent = jobj["consent"];
+                    Settings.collect = jobj["collect"];
+                    Settings.dashboard = jobj["dashboard"];
+                    Settings.export = jobj["export"];
+                }
+
+            }
+
+            catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException || e is IOException)
+            {
+                Debug.WriteLine(string.Join("\n\n", new string[] {
+                    "",
+                    $"'{e}'",
+                    "Could not read settings.json",
+                    "Check the file is named correctly and in the correct directory.",
+                    e.GetType().ToString(),
+                    e.Message,
+                    "There isn't much we can do without settings so we will halt loading the extension, good night.",
+                    ""
+                }));
+
+                return false;
+            }
+
+            catch (Newtonsoft.Json.JsonReaderException e)
+            {
+                Debug.WriteLine(string.Join("\n\n", new string[] {
+                    "",
+                    $"'{e}'",
+                    "Invalid JSON. Could not read settings.json",
+                    "Check it's correctly formatted. You could try pasting the contents to jsonlint.com to identify issues.",
+                    e.Message,
+                    "There isn't much we can do without settings so we will halt loading the extension, good night.",
+                    ""
+                }));
+
+                return false;
             }
 
             // If using Google Sheets and its value is the default placeholder then notify the user
@@ -42,6 +78,8 @@ namespace Binoculars
                 string title = "Binoculars";
                 MessageBox.Show(string.Join("\n\n", messages), title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
+
+            return true;
         }
     }
 
