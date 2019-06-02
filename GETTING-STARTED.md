@@ -15,11 +15,13 @@ To keep it simple we're assuming you want to use Google Sheets to store the log 
 
 ## Download Binoculars
 
-Download Binoculars and save it to the packages folder for the version of Dynamo or Dynamo Revit you use.
+Download the latest release of Binoculars from [releases](https://github.com/teamtreedyn/Binoculars/releases).
+
+Extract the `Binoculars` folder and copy it to the packages folder for the version of Dynamo or Dynamo Revit you use.
 
 ![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/getting-started/0.5/14-package-settings.png)
 
-If you just use Dynamo Sandbox it could be either:
+If you just use Dynamo Sandbox or Dynamo for FormIt this could be either:
 ```
 %appdata%\Dynamo\Dynamo Core\2.0\packages\
 %appdata%\Dynamo\Dynamo Core\2.1\packages\
