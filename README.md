@@ -1,57 +1,65 @@
 ![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide1.PNG)
 ________________
 
-### What ###
+### What
 
-Binoculars is a data tracker for Dynamo, it reports key stats about Dynamo Use to Google Sheets, which can be visualised using Google Data Studio. The data collected can be used to monitor Dynamo use eg. identify use of outdated Dynamo versions, quantify time saved.
+Binoculars is a view extension for Dynamo that records the use of scripts and graphs providing your organisation or design practice insight into the use of Dynamo in your computational design workflows.
 
+Binoculars started life at the Dynamo and Generative Design Hackathon in London, 2019 where it was awarded first place. To learn more [read our post on the Dynamo Blog](https://dynamobim.org/london-hackathon-binoculars/) or [watch the 4 minute Hackathon presentation](https://youtu.be/X_LNTIqhLPk?t=2492).
+
+### Why
+
+**Strategic Management**: to help others understand where and how Dynamo is used, what the financial benefit and return on invest is, to identify bottlenecks, and strategic risk allocation.
+**Tactical Management**: to identify the most commonly used scripts and who the local dynamo champions are – breaking down knowledge silos.
+**Operational Management**: to monitor where outdated versions of software and scripts are being used, to see which scripts are most or least popular and what dynamo is most commonly used for.
+
+### Getting Started
+
+We've developed an indepth Getting Started Guide to walk you through the steps to download, install, and configure the latest release of Binoculars for your version of Dynamo so you can easily integrate it into your organisation.
+
+[The Getting Started Guide](https://github.com/teamtreedyn/Binoculars/blob/master/GETTING-STARTED.md)
+
+If you're looking to build Binoculars from source in Visual Studio then please refer to [The Contributors' Guide](https://github.com/teamtreedyn/Binoculars#build-from-source) at the bottom of the README.
+
+### How
+
+The full history and methodology of Binoculars is told in [our post on the Dynamo Blog](https://dynamobim.org/london-hackathon-binoculars/). Go check it out, it's illustrated wth some of the best GIFs ever made.
+
+Binoculars runs as a view extension in Dynamo and logs data whenever a graph is run by hooking in to the `OnEvaulationCompleted` event.
+
+Binoculars captures a variety of data at two points. First on startup of dynamo user and environment data is collected, including Geolocation by IP using ipinfo.io. Second, data specific to the graph in use is collected after the graph has been run.
 
 ![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide6.PNG)
 
+The logs can then be stored using a variety of mechanisms such as to a CSV on a file server or to your organisation's cloud. The methodology followed at the Hackathon and currently built in to Binoculars is to store the Data in Google Sheets and then visualise that data on dashboards on a series of dashboards in Google Data Studio. Further methods for [data storage](https://github.com/teamtreedyn/Binoculars/issues?q=is%3Aissue+is%3Aopen+label%3A%22data+storage%22) and [data visualisation](https://github.com/teamtreedyn/Binoculars/issues?q=is%3Aissue+is%3Aopen+label%3A%22data+visualisation%22) are planned for the future.
 
-### How to use it ###
+### Contributing
 
-Download the github repository, use visual studio (or similar) to add to a new google sheets file ID. On build it will be placed in the correct location for ongoing Dynamo use. This build works with Dynamo Sandbox, but can be edited to work with Dynamo for Revit.
+Binoculars began life as a community project arising out of the UK Dynamo User Group Hackathon, April 2019. Feel free to make suggestions through pull requests, track and submit bugs through issues.
 
-Once installed Binoculars will activate when you run a Dynamo graph.
+### Building from Source
 
-Further work is required to facilitate wider implementation to overcome google authentication, and legal requirements.
+1. Either clone the repository with git or download the source as [a zip](https://github.com/teamtreedyn/Binoculars/archive/master.zip).
+
+2. Open [Binoculars.csproj](https://github.com/teamtreedyn/Binoculars/blob/master/Binoculars.csproj) in a text editor and ensure the `DeployFolder` is [correctly set](https://github.com/teamtreedyn/Binoculars/commit/ac088bd3fe5c027b6c0cc8e35185bcba1296953e#diff-fec7353f03ce00d43d7df2154ba6bfc4L179-L181) for your version of Dynamo. This currently defaults to `v2.1`.
+
+3. Open the `.sln` with Visual Studio and make sure all References are set correctly.
+
+4. Follow steps 2 onwards of [The Getting Started Guide](https://github.com/teamtreedyn/Binoculars/blob/master/GETTING-STARTED.md) to configure Binoculars.
+
+5. Compile Binoculars in Visual Studio by pressing run. Wait a moment as it compiles. Dynamo should then [launch itself](https://github.com/teamtreedyn/Binoculars/commit/f1d95feb65e062e51180b4129466e29a786596a1#diff-37951fdf0b7fcbedc8a257b49641dcf3R17) and if successful you should see Binoculars at the end of the menu bar at the top of the Dynamo interface. Now, when you run a Graph, you should see a new entry appear in your Google Sheet.
+
+6. Tap yourself on the shoulder.
 
 *Visualising the data* we've created a template in Google Data Studio that can be connected to your Google Sheet to show your results.
 
 ![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Copy_of_ET_Dashboard-1.png)
 
-### Quickstart ###
+#### Disclaimer
 
-1. Clone/download the repository.
-2. Make sure all References are set correctly.
-3. Follow this [link](https://developers.google.com/sheets/api/quickstart/dotnet) to enable Google API and generate credentials.json file.
-4. Download credentials.json into the root of your project repo. (While testing, we failed collecting the file using IE. Try using Chrome if you experience a similar issue).
-5. Create a new Google Sheets document; **Share** it (top-right corner) so that **everyone with the link** can **edit** the document.
-6. Make note of the Sheet name and the Worksheet name:
-<img src="https://github.com/teamtreedyn/Binoculars/blob/master/Images/walkthrough_1.png" alt="wlk_1" height="250"/>
+Sharing your Google Account credentials and private keys will expose the Google account associated with it in some ways. Please, investigate the concept before commiting further. Using a neutral Google account might be the best option if you don't understand the repercussions of using Google API fully.
 
-7. In Data.cs replace String spreadsheetId and String spreadsheetTab with the values from your own Google Sheet. (Line 128)
-8. Compile, run Dynamo, run a Graph. You should see a new entry appear in your Google Sheet.
-9. Tap yourself on the shoulder.
-
-### Disclaimer ###
-
-Creating and distributing credentials.json file will expose the Google account associated with it in some ways. Please, investigate the concept before commiting further. Using a neutral Google account might be the best option if you don't understand the repercussions of using Google API fully.
-
-### Why ###
-
-Collecting data about your dynamo script use can help in so many ways, we've identified three catagories of users but there are probably many more
-- *Executive Level* understanding the benefits/return on investment of dynamo use
-- *Diagnostics* evaluate where outdated versions of Dynamo or graphs are use
-- *Users* see which scripts are used the most, identify champion users to go to for help
-
-### Please contribute ###
-
-Binoculars is a community project arising out of the UKDUG Hackathon April 2019. Feel free to make suggestions through pull requests, track and submit bugs through issues.
-_____________
-
-### How we got here ###
+### How we got here
 
 Building on the python code presented by Olly Green of AHMM at UKDUG meeting on 19th of February 2012.
 Further developed by Wayne Patrick Dalton and Brendan Cassidy.
@@ -75,11 +83,13 @@ The code can be broken down into 3 main pieces
 
 ________________
 
-### Creating the sample data set ###
+### The Sample Data
 
 As a side exercise to help us visualise the data we were expecting to get from Binoculars we wrote a dynamo graph to produce a sample data set.
 
 Collecting a sample set of information from the internet, we used python nodes to generate and randomise a series of outputs.
+
+The Sample Data graph is available in [its dedicated repository](https://github.com/teamtreedyn/BinocularsSampleData/).
 
 __________________
 
