@@ -1,0 +1,45 @@
+{
+  "consent": {
+    "requested": true,
+    "given": true
+  },
+
+  "collect": {
+    "user": true,
+    "computerName": true,
+    "dynamoVersion": true,
+    "revitVersion": true,
+    "ip": true,
+    "geolocation": true,
+    "latlng": true,
+    "city": true,
+    "country": true,
+    "filename": true,
+    "date": true
+  },
+
+  "dashboard": {
+    "method": "googleDataStudio",
+    "id": "YOUR GOOGLE DATA STUDIO REPORT ID"
+  },
+
+  "export": {
+    "method": "googleSheets",
+    "googleSheets": {
+      "id": "YOUR GOOGLE SHEETS ID",
+      "sheet": "YOUR GOOGLE SHEETS SHEET NAME"
+    },
+    "googleSheetsServiceAccount": {
+      "type": "service_account",
+      "project_id": "YOUR GOOGLE CLOUD PROJECT ID",
+      "private_key_id": "YOUR GOOGLE CLOUD SERVICE ACCOUNT KEY ID",
+      "private_key": "YOUR GOOGLE CLOUD SERVICE ACCOUNT KEY",
+      "client_email": "YOUR GOOGLE CLOUD SERVICE ACCOUNT EMAIL",
+      "client_id": "YOUR GOOGLE CLOUD SERVICE ACCOUNT ID",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url": "YOUR GOOGLE CLOUD SERVICE ACCOUNT CERT URL"
+    }
+  }
+}
