@@ -10,14 +10,17 @@ Binoculars started life at the Dynamo and Generative Design Hackathon in London,
 ### Why
 
 **Strategic Management**: to help others understand where and how Dynamo is used, what the financial benefit and return on invest is, to identify bottlenecks, and strategic risk allocation.
+
 **Tactical Management**: to identify the most commonly used scripts and who the local dynamo champions are – breaking down knowledge silos.
+
 **Operational Management**: to monitor where outdated versions of software and scripts are being used, to see which scripts are most or least popular and what dynamo is most commonly used for.
 
 ### Getting Started
 
 We've developed an indepth Getting Started Guide to walk you through the steps to download, install, and configure the latest release of Binoculars for your version of Dynamo so you can easily integrate it into your organisation.
 
-[The Getting Started Guide](https://github.com/teamtreedyn/Binoculars/blob/master/GETTING-STARTED.md)
+- [Getting Started Guide](https://github.com/teamtreedyn/Binoculars/blob/master/GETTING-STARTED.md)
+- [Latest Releases](https://github.com/teamtreedyn/Binoculars/releases)
 
 If you're looking to build Binoculars from source in Visual Studio then please refer to [The Contributors' Guide](https://github.com/teamtreedyn/Binoculars#build-from-source) at the bottom of the README.
 
