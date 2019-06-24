@@ -13,6 +13,7 @@ using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using Newtonsoft.Json.Linq;
+using CsvHelper;
 
 namespace Binoculars
 {
@@ -104,24 +105,60 @@ namespace Binoculars
             // Data.filepath = workspace.FileName;
             // Data.evaluationCount = workspace.EvaluationCount;
             // Data.packages = workspace.Dependencies;
-        }
-        /// <summary>
-        /// Generate the export message to be recorded in Google Sheets
-        /// </summary>
-        /// <returns></returns>
-        internal static IList<IList<object>> Export()
-        {
-            IList<IList<object>> export = new List<IList<object>>();
 
             // Set the date
             // @todo "hh" is incorrectly returning values in the afternoon. It should be "14" not "2" etc for any hour after midday
-            if((Boolean)Settings.collect["date"]) date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            if ((Boolean)Settings.collect["date"]) Data.date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+        }
+
+        public static List<Object> ToList()
+        {
+            return new List<Object>
+            {
+                new { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date }
+            };
+        }
+
+        public static IList<IList<object>> ToIList()
+        {
+            IList<IList<object>> export = new List<IList<object>>();
 
             // Create and return a list of all the Data strings
-            var exportData = new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date, ID };
-
-            export.Add(exportData);
+            export.Add(new List<object> { user, computerName, ip, latlng, city, country, dynamoVersion, revitVersion, filename, date });
             return export;
+        }
+
+        public static void ExportToCSV()
+        {
+            var data = Data.ToList();
+
+            using (var writer = new StreamWriter("data.csv"))
+            using (var csv = new CsvWriter(writer))
+            {
+                //csvWriter.Configuration.Delimiter = ";";
+                //csvWriter.Configuration.HasHeaderRecord = true;
+                //csv.Configuration.AutoMap<String>();
+
+                //csvWriter.WriteHeader<Project>();
+                csv.WriteRecords(data);
+            }
+        }
+
+        internal static void Export()
+        {
+            
+            // @todo Wrap these in an if statement
+            // if ((String)Settings.export["method"] == "googleSheets")
+
+            // Export to CSV
+            Data.ExportToCSV();
+
+            return;
+
+            // Export to Google Sheets
+            var data = Data.ToIList();
+            ExportSheets.Execute(data);
+
         }
     }
     /// <summary>

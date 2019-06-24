@@ -32,8 +32,7 @@ namespace Binoculars
 
             // When graph evaluation is complete
             // Get all the data we want to store and then store it
-            var dataToExport = Data.Export();
-            ExportSheets.Execute(dataToExport);
+            Data.Export();
 
         }
 
