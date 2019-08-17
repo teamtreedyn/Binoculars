@@ -1,4 +1,4 @@
-![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide1.PNG)
+![](Images/Slide1.PNG)
 ________________
 
 ### What
@@ -19,7 +19,7 @@ Binoculars started life at the Dynamo and Generative Design Hackathon in London,
 
 We've developed an indepth Getting Started Guide to walk you through the steps to download, install, and configure the latest release of Binoculars for your version of Dynamo so you can easily integrate it into your organisation.
 
-- [Getting Started Guide](https://github.com/teamtreedyn/Binoculars/blob/master/GETTING-STARTED.md)
+- [Getting Started Guide](GETTING-STARTED.md)
 - [Latest Releases](https://github.com/teamtreedyn/Binoculars/releases)
 
 If you're looking to build Binoculars from source in Visual Studio then please refer to [The Contributors' Guide](https://github.com/teamtreedyn/Binoculars#build-from-source) at the bottom of the README.
@@ -32,7 +32,7 @@ Binoculars runs as a view extension in Dynamo and logs data whenever a graph is 
 
 Binoculars captures a variety of data at two points. First on startup of dynamo user and environment data is collected, including Geolocation by IP using ipinfo.io. Second, data specific to the graph in use is collected after the graph has been run.
 
-![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide6.PNG)
+![](Images/Slide6.PNG)
 
 The logs can then be stored using a variety of mechanisms such as to a CSV on a file server or to your organisation's cloud. The methodology followed at the Hackathon and currently built in to Binoculars is to store the Data in Google Sheets and then visualise that data on dashboards on a series of dashboards in Google Data Studio. Further methods for [data storage](https://github.com/teamtreedyn/Binoculars/issues?q=is%3Aissue+is%3Aopen+label%3A%22data+storage%22) and [data visualisation](https://github.com/teamtreedyn/Binoculars/issues?q=is%3Aissue+is%3Aopen+label%3A%22data+visualisation%22) are planned for the future.
 
@@ -44,11 +44,11 @@ Binoculars began life as a community project arising out of the UK Dynamo User G
 
 1. Either clone the repository with git or download the source as [a zip](https://github.com/teamtreedyn/Binoculars/archive/master.zip).
 
-2. Open [Binoculars.csproj](https://github.com/teamtreedyn/Binoculars/blob/master/Binoculars.csproj) in a text editor and ensure the `DeployFolder` is [correctly set](https://github.com/teamtreedyn/Binoculars/commit/ac088bd3fe5c027b6c0cc8e35185bcba1296953e#diff-fec7353f03ce00d43d7df2154ba6bfc4L179-L181) for your version of Dynamo. This currently defaults to `v2.1`.
+2. Open [Binoculars.csproj](Binoculars.csproj) in a text editor and ensure the `DeployFolder` is [correctly set](https://github.com/teamtreedyn/Binoculars/commit/ac088bd3fe5c027b6c0cc8e35185bcba1296953e#diff-fec7353f03ce00d43d7df2154ba6bfc4L179-L181) for your version of Dynamo. This currently defaults to `v2.1`.
 
 3. Open the `.sln` with Visual Studio and make sure all References are set correctly.
 
-4. Follow steps 2 onwards of [The Getting Started Guide](https://github.com/teamtreedyn/Binoculars/blob/master/GETTING-STARTED.md) to configure Binoculars.
+4. Follow steps 2 onwards of [The Getting Started Guide](GETTING-STARTED.md) to configure Binoculars.
 
 5. Compile Binoculars in Visual Studio by pressing run. Wait a moment as it compiles. Dynamo should then [launch itself](https://github.com/teamtreedyn/Binoculars/commit/f1d95feb65e062e51180b4129466e29a786596a1#diff-37951fdf0b7fcbedc8a257b49641dcf3R17) and if successful you should see Binoculars at the end of the menu bar at the top of the Dynamo interface. Now, when you run a Graph, you should see a new entry appear in your Google Sheet.
 
@@ -56,7 +56,7 @@ Binoculars began life as a community project arising out of the UK Dynamo User G
 
 *Visualising the data* we've created a template in Google Data Studio that can be connected to your Google Sheet to show your results.
 
-![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Copy_of_ET_Dashboard-1.png)
+![](Images/Copy_of_ET_Dashboard-1.png)
 
 #### Disclaimer
 
@@ -74,7 +74,7 @@ Rather than relying on the graph user to add a custom/zero touch node to their s
 
 Binoculars appears as a drop down on the menu bar, with information about the information that is being collected, and access to the report produced from the data collected.
 
-![](https://github.com/teamtreedyn/Binoculars/blob/master/Images/Slide14.PNG)
+![](Images/Slide14.PNG)
 
 Obviously any data monitoring has GDPR (or similar!) implications so we built in a popup that makes the user aware that their data is being tracked.
 
