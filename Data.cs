@@ -77,21 +77,54 @@ namespace Binoculars
                 }
 
                 catch (System.Net.WebException e) {
-                    //Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-                    //Debug.AutoFlush = true;
-                    //Debug.Indent();
-                    Debug.WriteLine(string.Join("\n\n", new string[] {
-                        "",
-                        $"'{e}'",
-                        "Connection to ipinfo.io failed.",
-                        "Are you offline?",
-                        e.Message,
-                        "Continuing without collecting IP and geolocation data.",
-                        ""
-                    }));
-                    //Debug.Unindent();
-                }
-            }
+					//Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+					//Debug.AutoFlush = true;
+					//Debug.Indent();
+					//Debug.WriteLine(string.Join("\n\n", new string[] {
+					//    "",
+					//    $"'{e}'",
+					//    "Connection to ipinfo.io failed.",
+					//    "Are you offline?",
+					//    e.Message,
+					//    "Continuing without collecting IP and geolocation data.",
+					//    ""
+					//}));
+					//Debug.Unindent();
+					try
+					{
+						// Request the IP and geolocation from ipinfo.io
+						WebClient client = new WebClient();
+						client.Headers.Set("Accept", "application/json");
+						var json = client.DownloadString("https://api.ip2location.io");
+
+						// Parse the JSON
+						JObject ip2locationio = JObject.Parse(json);
+
+						// Store geolocation data
+						if ((Boolean)Settings.collect["ip"]) Data.ip = (string)ip2locationio["ip"];
+						if ((Boolean)Settings.collect["latlng"]) Data.latlng = (string)ip2locationio["latitude"] + "," + (string)ip2locationio["longitude"];
+						if ((Boolean)Settings.collect["city"]) Data.city = (string)ip2locationio["city_name"];
+						if ((Boolean)Settings.collect["country"]) Data.country = (string)ip2locationio["country_code"];
+					}
+
+					catch (System.Net.WebException e)
+					{
+						//Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+						//Debug.AutoFlush = true;
+						//Debug.Indent();
+						Debug.WriteLine(string.Join("\n\n", new string[] {
+						"",
+						$"'{e}'",
+						"Connection to api.ip2location.io failed.",
+						"Are you offline?",
+						e.Message,
+						"Continuing without collecting IP and geolocation data.",
+						""
+					}));
+						//Debug.Unindent();
+					}
+				}
+			}
         }
         /// <summary>
         /// Record data from the Graph
